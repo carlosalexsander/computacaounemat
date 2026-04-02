@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNEMAT-Alto Araguaia/Rondonópolis</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -99,7 +99,7 @@
     <aside class="w-64 bg-dark-800 border-r border-slate-700 flex flex-col z-20 shadow-xl hidden md:flex">
         <!-- Header / Logo -->
         <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50">
-            <div class="w-25 h-25 mb-3 relative">
+            <div class="w-20 h-20 mb-3 relative">
                 <!-- Logo Image Placeholder -->
                 <img src="logo_bcc_vertical_fundo_transparente_texto_branco.png" 
                      alt="BCC Logo" 
@@ -669,21 +669,42 @@
                     </div>
                 </div>
 
-                <!-- Realização -->
-                <div class="glass-panel p-8 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-building-columns text-purple-400"></i> Realização
+                <!-- Realização e Parceiros -->
+                <div class="glass-panel p-8 rounded-2xl text-center border-t-4 border-t-slate-600">
+                    <h2 class="text-2xl font-bold text-white mb-8 flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-handshake text-brand-400"></i> Realização e Parceiros
                     </h2>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="bg-slate-800/50 p-5 rounded-xl border border-brand-500/30 flex items-center gap-4">
-                            <div class="w-12 h-12 bg-brand-500/20 text-brand-400 rounded-full flex items-center justify-center text-xl shrink-0">
-                                <i class="fa-solid fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <p class="text-white font-bold text-lg tracking-wide">UNEMAT</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center justify-items-center">
+                        
+                        <!-- Coluna: Realização -->
+                        <div class="flex flex-col items-center gap-3 w-full">
+                            <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Realização</span>
+                            <div class="bg-white p-4 rounded-xl w-full max-w-[240px] h-24 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
+                                <img src="unemat.aia.roo.fundo.branco.png" alt="UNEMAT" class="max-w-full max-h-full object-contain">
                             </div>
                         </div>
+
+                        <!-- Coluna: Apoio Institucional -->
+                        <div class="flex flex-col items-center gap-3 w-full">
+                            <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Apoio Institucional</span>
+                            <div class="bg-white p-4 rounded-xl w-full max-w-[240px] h-24 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
+                                <img src="Logo SBC.png" alt="Sociedade Brasileira de Computação" class="max-w-full max-h-full object-contain">
+                            </div>
+                        </div>
+
+                        <!-- Coluna: Parceiros / Patrocinadores -->
+                        <div class="flex flex-col items-center gap-3 w-full">
+                            <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Parceiros</span>
+                            <!-- Aqui você pode adicionar as logos dos parceiros futuramente substituindo a div abaixo pela tag img equivalente -->
+                            <div class="border-2 border-dashed border-slate-600 rounded-xl w-full max-w-[240px] h-24 flex items-center justify-center bg-slate-800/30 hover:border-brand-500 hover:text-brand-400 transition-colors cursor-pointer group">
+                                <span class="text-slate-500 font-medium text-sm flex flex-col items-center gap-1 group-hover:text-brand-400 transition-colors">
+                                    <i class="fa-solid fa-plus text-lg"></i>
+                                    Seja um Parceiro
+                                </span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
