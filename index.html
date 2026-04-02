@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt-BR"> 
+<head> 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YKYPX7JBTP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YKYPX7JBTP');
+</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNEMAT-Alto Araguaia/Rondonópolis</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky 500
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-item.active {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border-right: 3px solid #38bdf8;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        /* Modal Animation */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 300ms, transform 300ms; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 200ms, transform 200ms; }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-200 h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-dark-800 border-r border-slate-700 flex flex-col z-20 shadow-xl hidden md:flex">
+        <!-- Header / Logo -->
+        <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50">
+            <div class="w-27 h-27 mb-3 relative">
+                <!-- Logo Image Placeholder -->
+                <img src="logo_bcc_vertical_fundo_transparente_texto_branco.png" 
+                     alt="BCC Logo" 
+                     class="w-full h-full object-contain drop-shadow-lg"
+                     onerror="this.style.display='none'; document.getElementById('fallback-logo').style.display='flex'">
+                
+                <div id="fallback-logo" class="hidden w-full h-full bg-brand-500/10 rounded-xl items-center justify-center border border-brand-500/20 text-brand-500 text-2xl">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-slate-400 font-mono mt-1">UNEMAT - Alto Araguaia/ Rondonópolis</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
+            <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Menu Principal</p>
+            
+            <button onclick="app.navigate('schedule')" id="nav-schedule" class="nav-item w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">
+                <i class="fa-regular fa-calendar-days w-5 text-center"></i>
+                Horários 2026/1
+            </button>
+
+            <button onclick="app.navigate('guide')" id="nav-guide" class="nav-item w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">
+                <i class="fa-solid fa-book-open-reader w-5 text-center"></i>
+                Guia do Estudante
+            </button>
+
+            <!-- NOVO MENU: SECOMP 2026 -->
+            <button onclick="app.navigate('secomp')" id="nav-secomp" class="nav-item w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-all">
+                <i class="fa-solid fa-microchip w-5 text-center text-purple-400"></i>
+                SECOMP 2026
+            </button>
+
+            <a href="https://script.google.com/a/macros/unemat.br/s/AKfycbzhg3Y_g_4pklqMaw_DIEovg8C8HKGPVKY_U-wwDgPIg0Zpp_i49cfWtiFNUYrAbsDhXg/exec" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-computer w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                Agenda de Laboratórios
+            </a>
+            
+            <p class="px-3 text-xs font-bold text-slate-500 uppercase tracking-wider mt-6 mb-2">Links Externos</p>
+
+            <a href="https://sigaa.unemat.br/sigaa/verTelaLogin.do" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-globe w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                Sistema Acadêmico
+            </a>
+            
+            <a href="https://bit.ly/CalAcademico" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-calendar-check w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                Calendário Institucional
+            </a>
+
+            <a href="https://caest-informa.manus.space/" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-slate-400 hover:text-brand-500 hover:bg-slate-700/50 transition-all group">
+                <i class="fa-solid fa-user-group w-5 text-center text-slate-500 group-hover:text-brand-500"></i>
+                CAEST
+            </a>
+
+            <!-- ALXnderBETA Link -->
+            <a href="https://bit.ly/iALXnderBETA" target="_blank" class="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium rounded-lg text-brand-400 bg-brand-500/10 border border-brand-500/20 hover:bg-brand-500/20 transition-all group mt-4">
+                <i class="fa-solid fa-robot w-5 text-center text-brand-500"></i>
+                Dúvidas? <span class="text-[10px] bg-brand-500 text-white px-1.5 rounded ml-auto">IA</span>
+            </a>
+        </nav>
+
+        <!-- Footer Info -->
+        <div class="p-4 bg-slate-900/50 border-t border-slate-700/50 text-xs">
+            <div class="flex items-center gap-2 text-brand-500 font-bold mb-2">
+                <i class="fa-solid fa-clock"></i> Atendimento (Seg-Sex)
+            </div>
+            <div class="space-y-2 text-slate-400">
+                <div class="flex justify-between">
+                    <span>Rondonópolis:</span>
+                    <span class="text-slate-200">07h-11h45 / 18h-21h</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Alto Araguaia:</span>
+                    <span class="text-slate-200">12h-18h</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col min-w-0 bg-dark-900 relative">
+        
+        <!-- Header Mobile -->
+        <header class="md:hidden bg-dark-800 border-b border-slate-700 p-4 flex justify-between items-center z-10">
+            <span class="font-bold text-white">UNEMAT-AIA/ROO</span>
+            <div class="flex gap-4">
+                <button onclick="app.navigate('secomp')" class="text-purple-400"><i class="fa-solid fa-microchip"></i></button>
+                <button onclick="app.navigate('schedule')" class="text-brand-400"><i class="fa-solid fa-calendar-days"></i></button>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth" id="main-scroll">
+            
+            <!-- VIEW: SCHEDULE (Grades) -->
+            <div id="view-schedule" class="max-w-6xl mx-auto space-y-8 animate-fade-in hidden">
+                <!-- Campus Toggles -->
+                <div class="flex justify-center mb-8">
+                    <div class="bg-slate-800 p-1 rounded-xl inline-flex shadow-lg border border-slate-700">
+                        <button onclick="app.setCampus('AIA')" id="tab-aia" class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot"></i> Alto Araguaia
+                        </button>
+                        <button onclick="app.setCampus('ROO')" id="tab-roo" class="px-6 py-2 rounded-lg text-sm font-bold transition-all duration-200 flex items-center gap-2">
+                            <i class="fa-solid fa-building-columns"></i> Rondonópolis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phase Tabs -->
+                <div class="overflow-x-auto pb-2">
+                    <div class="flex md:justify-center gap-2 min-w-max px-2" id="phase-tabs">
+                        <!-- JS injected -->
+                    </div>
+                </div>
+
+                <!-- Schedule Content -->
+                <div id="schedule-container" class="space-y-6">
+                    <!-- JS injected -->
+                </div>
+
+                <!-- Chart Section -->
+                <div class="glass-panel rounded-2xl p-6 mt-8">
+                    <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-simple text-brand-500"></i> Carga Horária Semanal
+                    </h3>
+                    <div class="chart-container mx-auto">
+                        <canvas id="workloadChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: STUDENT GUIDE -->
+            <div id="view-guide" class="hidden max-w-5xl mx-auto space-y-8 animate-fade-in">
+                
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-white mb-2">Guia do Estudante</h2>
+                    <p class="text-slate-400">Recursos, links e orientações essenciais para a sua jornada.</p>
+                </div>
+
+                <!-- Welcome Card -->
+                <div class="bg-gradient-to-r from-brand-900/50 to-slate-800 rounded-2xl p-6 border-l-4 border-brand-500 shadow-lg">
+                    <h3 class="text-xl font-bold text-white mb-3">📢 Mensagem de Boas-vindas</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Caros estudantes,<br>
+                        Sejam bem-vindos à nossa comunidade acadêmica! 💙 Para apoiar a sua jornada universitária, reunimos informações essenciais que vão facilitar o seu dia a dia.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Card: Tutoriais -->
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-slate-800/80 transition-colors">
+                        <div class="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-laptop-file"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-4">Tutoriais e Orientações</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li>
+                                <a href="https://bit.ly/tutoriaisSIGAA" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>Uso do SIGAA</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                            <li class="border-t border-slate-700/50 pt-2">
+                                <a href="https://bit.ly/EstudanteNEE" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>Estudantes com NEE</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                            <li class="border-t border-slate-700/50 pt-2">
+                                <a href="https://bit.ly/CAESTUnematAIA" target="_blank" class="flex justify-between items-center text-slate-300 hover:text-brand-400 group">
+                                    <span>CAEST – Assuntos Estudantis</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card: PPCs -->
+                    <div class="glass-panel p-6 rounded-2xl hover:bg-slate-800/80 transition-colors">
+                        <div class="w-10 h-10 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center mb-4 text-xl">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-4">Projetos Pedagógicos (PPC)</h3>
+                        <div class="space-y-3">
+                            <a href="http://www.unemat.br/resolucoes/resolucoes/conepe/5300_res_conepe_61_2023.pdf" target="_blank" class="block bg-slate-900/50 hover:bg-slate-700 p-3 rounded-lg border border-slate-700 hover:border-purple-500/50 transition-all group">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-slate-200">Rondonópolis</span>
+                                    <i class="fa-solid fa-file-pdf text-slate-500 group-hover:text-purple-400"></i>
+                                </div>
+                            </a>
+                            <a href="https://www.unemat.br/resolucoes/resolucoes/conepe/5298_res_conepe_58_2023.pdf" target="_blank" class="block bg-slate-900/50 hover:bg-slate-700 p-3 rounded-lg border border-slate-700 hover:border-purple-500/50 transition-all group">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-slate-200">Alto Araguaia</span>
+                                    <i class="fa-solid fa-file-pdf text-slate-500 group-hover:text-purple-400"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card: Rights -->
+                    <div class="md:col-span-2 bg-gradient-to-br from-indigo-900/40 to-slate-800 p-6 rounded-2xl border border-indigo-500/30 relative overflow-hidden">
+                        <div class="absolute right-0 top-0 p-6 opacity-5 pointer-events-none">
+                            <i class="fa-solid fa-scale-balanced text-9xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-indigo-300 mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-gavel"></i> Direitos e Deveres
+                        </h3>
+                        <p class="text-slate-300 text-sm mb-4 max-w-2xl">
+                            Leitura essencial para alinhar expectativas. Contém regras sobre avaliações, notas, frequência, conduta e normas acadêmicas.
+                        </p>
+                        <a href="https://bit.ly/DireitoseDeveresUNEMAT" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-sm font-bold transition-shadow hover:shadow-lg hover:shadow-indigo-500/20">
+                            Ler Documento Oficial <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- VIEW: SECOMP 2026 LANDING PAGE -->
+            <div id="view-secomp" class="max-w-6xl mx-auto space-y-12 animate-fade-in">
+                
+                <!-- Hero Section -->
+                <div class="relative bg-gradient-to-br from-purple-900 via-dark-800 to-brand-900 rounded-3xl p-8 md:p-16 overflow-hidden border border-purple-500/30 shadow-2xl">
+                    <div class="absolute top-0 right-0 -mt-10 -mr-10 opacity-5 pointer-events-none">
+                        <i class="fa-solid fa-microchip text-[300px]"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold uppercase tracking-widest mb-6 border border-purple-500/30">
+                            <i class="fa-solid fa-calendar-days"></i> 06 a 11 de Junho de 2026
+                        </div>
+                        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                            VII Semana de Computação <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-brand-400">SECOMP 2026</span>
+                        </h1>
+                        <p class="text-xl md:text-2xl text-slate-300 font-light mb-8 max-w-3xl italic">
+                            "Conectando Inteligências: Do Campus ao Ecossistema Global"
+                        </p>
+                        <div class="flex flex-wrap items-center gap-6 text-sm text-slate-400 font-mono mb-10">
+                            <span class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700"><i class="fa-solid fa-location-dot text-brand-500"></i> UNEMAT Rondonópolis</span>
+                            <span class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700"><i class="fa-solid fa-clock text-brand-500"></i> 40 Horas de Carga Horária</span>
+                            <span class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700"><i class="fa-solid fa-users text-brand-500"></i> Evento Presencial</span>
+                            <span class="flex items-center gap-2 bg-blue-900/50 text-blue-200 px-3 py-1.5 rounded-lg border border-blue-500/50"><i class="fa-solid fa-handshake text-blue-400"></i> Apoio SBC</span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#chamada-trabalhos" class="px-8 py-4 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all shadow-lg shadow-brand-500/25 flex items-center gap-3 text-lg">
+                                <i class="fa-solid fa-file-arrow-up"></i> Submissão de Trabalhos
+                            </a>
+                            <a href="#programacao" class="px-8 py-4 rounded-xl bg-dark-800 border border-slate-600 hover:border-purple-500 text-white font-bold transition-all flex items-center gap-3 text-lg">
+                                <i class="fa-solid fa-list"></i> Ver Programação
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sobre o Evento -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 glass-panel p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-circle-info text-purple-400"></i> Sobre o Evento
+                        </h2>
+                        <div class="space-y-4 text-slate-300 leading-relaxed text-sm md:text-base">
+                            <p>
+                                A VII Semana de Computação (SECOMP) consolida-se como o maior fórum de convergência tecnológica e inovação da região sul de Mato Grosso. Sediado em Rondonópolis, o evento atua como um catalisador vital para a região, face às rápidas exigências técnicas da <strong>Indústria 4.0 e do Agro 5.0</strong>.
+                            </p>
+                            <p>
+                                A proposta promove uma integração intercampi inédita, unificando as delegações de todos os campi da Universidade do Estado de Mato Grosso que ofertam cursos na área de tecnologia: <span class="text-white font-medium">Alto Araguaia, Barra do Bugres, Cáceres, Sinop, Lucas do Rio Verde e Rondonópolis</span>.
+                            </p>
+                            <p>
+                                O evento transcende a academia, focando-se na conversão de conhecimento em inovação através de competições tecnológicas, <em>Demodays</em> de <em>Startups</em>, rodadas de recrutamento (<em>Speed Recruiting</em>) e um rigoroso Congresso Científico com publicações indexadas. Conta com o <strong>apoio institucional da Sociedade Brasileira de Computação (SBC)</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-indigo-900/30 border border-indigo-500/20 p-6 rounded-2xl">
+                            <h3 class="font-bold text-indigo-300 mb-2">Inclusão e Diversidade</h3>
+                            <p class="text-sm text-slate-300 mb-3">Programa "Meninas Digitais", visando atrair e reter talentos femininos nas ciências exatas com painéis de liderança feminina na TI.</p>
+                            <i class="fa-solid fa-venus-mars text-indigo-500/50 text-3xl"></i>
+                        </div>
+                        <div class="bg-emerald-900/30 border border-emerald-500/20 p-6 rounded-2xl">
+                            <h3 class="font-bold text-emerald-300 mb-2">Trilha EduTech</h3>
+                            <p class="text-sm text-slate-300 mb-3">Capacitação de professores da rede básica focada no uso de robótica de baixo custo e Inteligência Artificial em sala de aula.</p>
+                            <i class="fa-solid fa-chalkboard-user text-emerald-500/50 text-3xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Atrações Especiais (HackaTIU, Jogos, Cosplay, Robôs) -->
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-t-pink-500">
+                    <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                                <i class="fa-solid fa-rocket text-pink-400"></i> Atrações e Competições
+                            </h2>
+                            <p class="text-slate-300 text-sm">Dias 06 e 07 de Junho: Um fim de semana de imersão geek, cultura maker e e-sports.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-colors group">
+                            <i class="fa-solid fa-code text-3xl text-pink-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                            <h3 class="font-bold text-white text-lg mb-1">HackaTIU</h3>
+                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
+                            <p class="text-sm text-slate-400">Maratona de programação e inovação para o desenvolvimento acelerado de soluções locais.</p>
+                        </div>
+                        
+                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
+                            <i class="fa-solid fa-gamepad text-3xl text-brand-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                            <h3 class="font-bold text-white text-lg mb-1">Jogos Digitais</h3>
+                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
+                            <p class="text-sm text-slate-400">Competição acirrada de e-sports e desafio de desenvolvimento de jogos eletrônicos.</p>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-colors group">
+                            <i class="fa-solid fa-mask text-3xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                            <h3 class="font-bold text-white text-lg mb-1">Concurso Cosplay</h3>
+                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">07 de Junho</div>
+                            <p class="text-sm text-slate-400">Desfile e caracterização para celebrar a cultura pop, anime e a vibrante comunidade geek.</p>
+                        </div>
+
+                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-emerald-500/50 transition-colors group">
+                            <i class="fa-solid fa-robot text-3xl text-emerald-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                            <h3 class="font-bold text-white text-lg mb-1">Exposição de Robôs</h3>
+                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
+                            <p class="text-sm text-slate-400">Mostra de robótica focada na criatividade com material reciclável e projetos Arduino.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Programação -->
+                <div id="programacao" class="glass-panel p-8 rounded-2xl border-t-4 border-t-purple-500 scroll-mt-6">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fa-regular fa-calendar-days text-purple-400"></i> Programação Geral
+                    </h2>
+                    
+                    <div class="bg-slate-800/50 p-8 rounded-xl border border-slate-700 text-center">
+                        <div class="w-16 h-16 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4 border border-purple-500/30">
+                            <i class="fa-solid fa-person-digging"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Programação em Construção</h3>
+                        <p class="text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                            A grade completa com os horários das <strong class="text-brand-400">Palestras</strong>, <strong class="text-emerald-400">Minicursos e Oficinas</strong> e <strong class="text-purple-400">Sessões Técnicas</strong> ainda está sendo cuidadosamente planejada pela nossa equipe e será divulgada em breve.
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm font-mono text-slate-400">
+                            <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">08/06: Abertura Oficial</span>
+                            <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">09 e 10/06: Atividades Técnicas</span>
+                            <span class="bg-slate-900/50 px-3 py-1.5 rounded border border-slate-700">11/06: Encerramento</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call for Papers Section (Inspirado no SBC / ERIMT) -->
+                <div id="chamada-trabalhos" class="glass-panel p-8 md:p-12 rounded-2xl border-t-4 border-t-brand-500 scroll-mt-6 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+                        <i class="fa-solid fa-file-signature text-9xl"></i>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6 relative z-10">
+                        <div>
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Chamada de Trabalhos <br><span class="text-xl text-brand-400 font-light">Call for Papers</span></h2>
+                            <p class="text-slate-300 text-lg">Submeta a sua pesquisa, minicurso ou oficina para a SECOMP 2026.</p>
+                        </div>
+                        <a href="https://jems3.sbc.org.br/viisecomp2026" target="_blank" class="animate-pulse hover:animate-none flex-shrink-0 inline-flex items-center gap-3 bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-bold shadow-xl shadow-brand-500/30 transition-all text-lg border border-brand-400">
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl"></i> Submeter via JEMS
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
+                        
+                        <!-- Left Column: Datas -->
+                        <div>
+                            <div class="bg-dark-800 rounded-xl border border-slate-700 overflow-hidden sticky top-8 shadow-2xl">
+                                <div class="bg-gradient-to-r from-brand-900 to-slate-800 p-5 border-b border-brand-500/50">
+                                    <h3 class="font-bold text-white text-xl flex items-center gap-3">
+                                        <i class="fa-regular fa-calendar-check text-brand-400"></i> Datas Importantes
+                                    </h3>
+                                </div>
+                                <div class="p-0">
+                                    <table class="w-full text-left text-sm">
+                                        <tbody class="divide-y divide-slate-700/50">
+                                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                                <td class="p-5 text-slate-300 font-medium">Submissão de Artigos (Completos e Curtos)</td>
+                                                <td class="p-5 text-right text-brand-400 font-mono font-bold whitespace-nowrap">Até 18/04/2026</td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                                <td class="p-5 text-slate-300 font-medium">Submissão de Minicursos e Oficinas</td>
+                                                <td class="p-5 text-right text-brand-400 font-mono font-bold whitespace-nowrap">Até 26/04/2026</td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                                <td class="p-5 text-slate-300 font-medium">Período de Avaliação (<i>Blind Review</i>)</td>
+                                                <td class="p-5 text-right text-yellow-500 font-mono whitespace-nowrap">19/04 a 06/05</td>
+                                            </tr>
+                                            <tr class="bg-brand-900/20 hover:bg-brand-900/40 transition-colors border-l-4 border-l-brand-500">
+                                                <td class="p-5 text-white font-bold">Divulgação de Resultados (Aceite)</td>
+                                                <td class="p-5 text-right text-brand-400 font-bold font-mono whitespace-nowrap">07/05/2026</td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-700/30 transition-colors">
+                                                <td class="p-5 text-slate-300 font-medium">Versão Final (<i>Camera-ready</i>)</td>
+                                                <td class="p-5 text-right text-red-400 font-mono whitespace-nowrap">14/05/2026</td>
+                                            </tr>
+                                            <tr class="hover:bg-slate-700/30 transition-colors bg-purple-900/10">
+                                                <td class="p-5 text-purple-200 font-bold">Realização do Evento</td>
+                                                <td class="p-5 text-right text-purple-400 font-bold font-mono whitespace-nowrap">08 a 11/06</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Guidelines & Modalities -->
+                        <div class="lg:col-span-2 space-y-10">
+                            
+                            <!-- Modalities -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-white border-b border-slate-700 pb-3 mb-6 flex items-center"><i class="fa-solid fa-layer-group text-brand-500 mr-3"></i> Modalidades de Submissão</h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors">
+                                        <h4 class="font-bold text-brand-400 mb-2 text-lg">Artigos Completos</h4>
+                                        <p class="text-sm text-slate-300 mb-4 leading-relaxed">Resultados finais ou substanciais de pesquisa científica.</p>
+                                        <div class="flex flex-wrap gap-2 text-[11px] font-mono">
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">5 a 6 páginas</span>
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Apresentação: 15 min</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors">
+                                        <h4 class="font-bold text-brand-400 mb-2 text-lg">Artigos Curtos</h4>
+                                        <p class="text-sm text-slate-300 mb-4 leading-relaxed">Projetos de Conclusão de Curso, Iniciação Científica ou resultados preliminares.</p>
+                                        <div class="flex flex-wrap gap-2 text-[11px] font-mono">
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">2 a 3 páginas</span>
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Apresentação: 7 min</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-colors">
+                                        <h4 class="font-bold text-purple-400 mb-2 text-lg">Propostas de Minicursos</h4>
+                                        <p class="text-sm text-slate-300 mb-4 leading-relaxed">Treinamento teórico ou prático focado numa tecnologia específica.</p>
+                                        <div class="flex flex-wrap gap-2 text-[11px] font-mono">
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Duração: 4h ou 8h</span>
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Proposta: 6 a 8 páginas</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-colors">
+                                        <h4 class="font-bold text-purple-400 mb-2 text-lg">Propostas de Oficinas</h4>
+                                        <p class="text-sm text-slate-300 mb-4 leading-relaxed">Experiências totalmente práticas ("mãos na massa") para os participantes.</p>
+                                        <div class="flex flex-wrap gap-2 text-[11px] font-mono">
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Certificado Instrutor: 20h</span>
+                                            <span class="bg-slate-900 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Plano Aula: Até 10 pág.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tracks (Trilhas) -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-white border-b border-slate-700 pb-3 mb-6 flex items-center"><i class="fa-solid fa-map-location-dot text-brand-500 mr-3"></i> Tópicos de Interesse (Trilhas)</h3>
+                                <div class="space-y-4">
+                                    <details class="bg-slate-800/60 rounded-xl border border-slate-700 group transition-all">
+                                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 text-slate-200 hover:text-brand-400">
+                                            <span class="text-base"><span class="text-brand-500 mr-2">1.</span> Computação Aplicada ao Agro 5.0 e Indústria 4.0</span>
+                                            <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-slate-500"></i></span>
+                                        </summary>
+                                        <div class="p-5 pt-0 text-sm text-slate-300 border-t border-slate-700/50 mt-2 bg-slate-800/30">
+                                            <ul class="list-disc pl-5 space-y-2 mt-3">
+                                                <li>Internet das Coisas (IoT) aplicada ao Agronegócio e Indústria</li>
+                                                <li>Visão Computacional e Processamento de Imagens no monitoramento</li>
+                                                <li>Robótica Agrícola, Industrial e Sistemas Embarcados</li>
+                                                <li>Cidades Inteligentes (<i>Smart Cities</i>) e Logística Conectada</li>
+                                            </ul>
+                                        </div>
+                                    </details>
+                                    
+                                    <details class="bg-slate-800/60 rounded-xl border border-slate-700 group transition-all">
+                                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 text-slate-200 hover:text-brand-400">
+                                            <span class="text-base"><span class="text-brand-500 mr-2">2.</span> Inteligência Artificial e Ciência de Dados</span>
+                                            <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-slate-500"></i></span>
+                                        </summary>
+                                        <div class="p-5 pt-0 text-sm text-slate-300 border-t border-slate-700/50 mt-2 bg-slate-800/30">
+                                            <ul class="list-disc pl-5 space-y-2 mt-3">
+                                                <li>Aprendizado de Máquina (<i>Machine Learning</i>) e <i>Deep Learning</i></li>
+                                                <li>Inteligência Artificial Generativa e Processamento de Linguagem Natural</li>
+                                                <li>Ciência de Dados (<i>Data Science</i>) e <i>Big Data</i></li>
+                                                <li>Informática Aplicada à Saúde, Finanças e Biotecnologia</li>
+                                            </ul>
+                                        </div>
+                                    </details>
+
+                                    <details class="bg-slate-800/60 rounded-xl border border-slate-700 group transition-all">
+                                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 text-slate-200 hover:text-brand-400">
+                                            <span class="text-base"><span class="text-brand-500 mr-2">3.</span> Engenharia de Software, Sistemas e Infraestrutura</span>
+                                            <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-slate-500"></i></span>
+                                        </summary>
+                                        <div class="p-5 pt-0 text-sm text-slate-300 border-t border-slate-700/50 mt-2 bg-slate-800/30">
+                                            <ul class="list-disc pl-5 space-y-2 mt-3">
+                                                <li>Engenharia de Software e Desenvolvimento Ágil</li>
+                                                <li>Computação em Nuvem e Arquiteturas Distribuídas</li>
+                                                <li>Segurança da Informação e Cibersegurança corporativa</li>
+                                                <li>Desenvolvimento de Aplicações Móveis e Web</li>
+                                            </ul>
+                                        </div>
+                                    </details>
+
+                                    <details class="bg-slate-800/60 rounded-xl border border-slate-700 group transition-all">
+                                        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-5 text-slate-200 hover:text-brand-400">
+                                            <span class="text-base"><span class="text-brand-500 mr-2">4.</span> Inovação, Educação e Tecnologias de Impacto Social</span>
+                                            <span class="transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down text-slate-500"></i></span>
+                                        </summary>
+                                        <div class="p-5 pt-0 text-sm text-slate-300 border-t border-slate-700/50 mt-2 bg-slate-800/30">
+                                            <ul class="list-disc pl-5 space-y-2 mt-3">
+                                                <li>Empreendedorismo Tecnológico, Gestão de TI e <i>Startups</i></li>
+                                                <li>Cultura <i>Maker</i>, Robótica Educacional e <i>Learning Analytics</i></li>
+                                                <li>Interação Humano-Computador (IHC) e Experiência do Usuário (UX/UI)</li>
+                                                <li>Informática na Educação e Inclusão (Mulheres, Negros, Indígenas, PCDs)</li>
+                                            </ul>
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+                            
+                            <!-- Regras e Templates -->
+                            <div class="bg-indigo-900/20 border border-indigo-500/30 p-8 rounded-2xl relative overflow-hidden">
+                                <div class="absolute -right-6 -bottom-6 opacity-10">
+                                    <i class="fa-solid fa-book-journal-whills text-9xl"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-indigo-300 mb-4 flex items-center gap-2 relative z-10"><i class="fa-solid fa-scale-balanced"></i> Instruções aos Autores</h4>
+                                <div class="space-y-4 text-sm text-slate-300 leading-relaxed relative z-10">
+                                    <p>
+                                        A SECOMP 2026 adota o rigoroso sistema de avaliação <strong><i>Double-Blind Peer Review</i></strong> (avaliação cega por pares). Na submissão inicial, a identidade e a filiação institucional dos autores <strong>devem ser rigorosamente omitidas</strong> no arquivo PDF.
+                                    </p>
+                                    <p>
+                                        Todos os trabalhos devem ser redigidos em língua portuguesa e formatados de acordo com o modelo oficial da Sociedade Brasileira de Computação (SBC).
+                                    </p>
+                                    
+                                    <div class="pt-4 pb-2">
+                                        <a href="https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-indigo-500/20">
+                                            <i class="fa-solid fa-download"></i> Baixar Modelo SBC (Template)
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div class="bg-slate-900/80 p-4 rounded-lg border border-blue-500/30 flex gap-4 items-start">
+                                            <i class="fa-solid fa-book-open-reader text-2xl text-blue-400 mt-1"></i>
+                                            <div>
+                                                <strong class="text-white block mb-1">SBC OpenLib (SOL)</strong>
+                                                <p class="text-xs text-slate-400">Com o apoio oficial da <strong>SBC</strong>, todos os anais da SECOMP 2026 serão publicados com ISBN/ISSN na biblioteca digital SOL, garantindo visibilidade nacional e internacional.</p>
+                                            </div>
+                                        </div>
+                                        <div class="bg-slate-900/80 p-4 rounded-lg border border-yellow-500/30 flex gap-4 items-start">
+                                            <i class="fa-solid fa-star text-2xl text-yellow-500 mt-1"></i>
+                                            <div>
+                                                <strong class="text-white block mb-1">Revista RECET</strong>
+                                                <p class="text-xs text-slate-400">Os trabalhos com melhor avaliação científica no congresso serão convidados para publicação numa edição especial da <strong>Revista RECET</strong> (ISSN: 2965-9558).</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Realização -->
+                <div class="glass-panel p-8 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-building-columns text-purple-400"></i> Realização
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-800/50 p-5 rounded-xl border border-brand-500/30 flex items-center gap-4">
+                            <div class="w-12 h-12 bg-brand-500/20 text-brand-400 rounded-full flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-lg tracking-wide">UNEMAT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ALXnder Announcement Modal -->
+    <div id="alxnder-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true">
+        <div class="bg-slate-900 border border-brand-500/50 rounded-2xl w-full max-w-2xl shadow-2xl relative transform scale-95 transition-transform duration-300">
+            <!-- Close Button -->
+            <button onclick="app.toggleModal('alxnder-modal', false)" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <!-- Header -->
+            <div class="p-6 border-b border-slate-700 bg-brand-900/20 rounded-t-2xl flex items-center gap-4">
+                <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-white text-2xl animate-pulse shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Plantão BCC UNEMAT Informa</h3>
+                    <p class="text-brand-400 text-sm font-mono uppercase tracking-wider">Novo Assistente Virtual Inteligente</p>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-5 text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto">
+                <p class="text-lg"><strong class="text-white">🤖 Atenção, equipe (Docentes e Discentes)!</strong></p>
+                <p>A Coordenação acaba de dar um upgrade no sistema. Conheçam o <strong class="text-brand-400">ALXnder</strong>, o nosso novo copiloto virtual.</p>
+                
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700 space-y-3">
+                    <p class="flex items-start gap-3">
+                        <i class="fa-solid fa-database text-brand-500 mt-1"></i> 
+                        <span><strong>Treinado com:</strong> O novo PPC, a Normatização Acadêmica 2024, regulamentos de Estágio, TCC e muito mais.</span>
+                    </p>
+                    <p class="flex items-start gap-3">
+                        <i class="fa-solid fa-bolt text-yellow-400 mt-1"></i> 
+                        <span><strong>A ideia?</strong> Chega de perder horas procurando uma regra específica em PDFs gigantes. Agilize a burocracia com respostas rápidas.</span>
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-3 text-sm italic text-slate-400 border-l-4 border-brand-500 pl-4 py-1">
+                    <span class="text-2xl">🚀</span>
+                    <p><strong>FASE BETA LIBERADA!</strong> O sistema está aberto para testes e precisamos da ajuda de vocês para calibrar a precisão das respostas.</p>
+                </div>
+                
+                <p class="text-center font-bold text-brand-300">… ao infinito e além… 😇😉🚀</p>
+            </div>
+
+            <!-- Footer -->
+            <div class="p-6 border-t border-slate-700 flex justify-end gap-3 bg-slate-800/50 rounded-b-2xl">
+                <button onclick="app.toggleModal('alxnder-modal', false)" class="px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">Fechar</button>
+                <a href="https://bit.ly/iALXnderBETA" target="_blank" class="px-6 py-2 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2 hover:scale-105">
+                    Acessar e Testar <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const data = {
+            'AIA': {
+                name: 'Alto Araguaia',
+                phases: [
+                    {
+                        id: 1, label: '1ª Fase', link: 'https://bit.ly/BCC1aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'IC', n: 'Introdução à Computação', p: 'Prof. Me. Juvenal' },
+                            { d: 'Terça', c: 'PTL', n: 'Produção de Texto', p: 'Profa. Ma. Nasle' },
+                            { d: 'Quarta', c: 'MD', n: 'Matemática Discreta', p: 'Profa. Dra. Adriana' },
+                            { d: 'Quinta', c: 'FME', n: 'Fundamentos da Matemática Elementar', p: 'Prof. Me. Antonio' },
+                            { d: 'Sexta', c: 'II', n: 'Inglês Instrumental', p: 'Prof. Thiago' }
+                        ],
+                        modular: { c: 'ALP1', n: 'Algoritmos I', p: 'Elton', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                    },
+                    {
+                        id: 3, label: '3ª Fase', link: 'https://bit.ly/BCC3aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'IRC', n: 'Introdução às Redes de Computadores' , p: 'Prof. Me. Wesley' },
+                            { d: 'Terça', c: 'AL', n: 'Álgebra Linear', p: 'Profa. Dra.Adriana' },
+                            { d: 'Quarta', c: 'TG', n: 'Teoria dos Grafos', p: 'Prof. Me. Antonio' },
+                            { d: 'Quinta', c: 'ED1', n: 'Estrutura de Dados I', p: 'CANCELADA' },
+                            { d: 'Sexta', c: 'CA2', n: 'Cálculo II', p: 'Prof. Me. Antonio' }
+                        ],
+                        modular: { c: 'FE', n: 'Fund. Eletrônica', p: 'Dr. Obana', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                    },
+                    {
+                        id: 5, label: '5ª Fase', link: 'https://bit.ly/BCC5aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'PE', n: 'Probabilidade e Estatística', p: 'Profa. Dra. Adriana' },
+                            { d: 'Terça', c: 'GTI', n: 'Governança em TI', p: 'Prof. Me. Juvenal' },
+                            { d: 'Quarta', c: 'SD', n: 'Sistemas Digitais', p: 'Prof. Dr. Obana' },
+                            { d: 'Quinta', c: 'LFA', n: 'Linguagens Formais e Autômatos', p: 'CANCELADA' },
+                            { d: 'Sexta', c: 'LPOO', n: 'Lab. de Prog. Orientado a Objetos', p: 'Prof. Elton' }
+                        ],
+                        modular: { c: 'LBD', n: 'Lab. Banco de Dados', p: 'Dr. Ubirajara', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                    },
+                    {
+                        id: 7, label: '7ª Fase', link: 'https://bit.ly/BCC7aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'QTS', n: 'Qualidade de Software', p: 'Prof. Dr. Ubirajara' },
+                            { d: 'Terça', c: 'CG', n: 'Computação Gráfica', p: 'Prof. Me. Wesley' },
+                            { d: 'Quarta', c: 'IHC', n: 'IHC', p: 'Prof. Me. Juvenal' },
+                            { d: 'Quinta', c: 'DSDM', n: 'Desenv. de Software para Disp. Móveis', p: 'Prof. Elton' },
+                            { d: 'Sexta', c: 'CO', n: 'Compiladores', p: 'CANCELADA' }
+                        ],
+                        extras: [
+                            { c: 'TCC I', n: 'Trabalho de Conclusão de Curso I', p: 'Prof. Christhian' },
+                            { c: 'TCC II', n: 'Trabalho de Conclusão de Curso II', p: 'Prof. Dr. Obana' },
+                            { c: 'ECS I', n: 'Estágio Curricular Supervisionado I', p: 'Prof. Dr. Ubirajara' },
+                            { c: 'ECS II', n: 'Estágio Curricular Supervisionado II', p: 'Prof. Me. Wesley' }
+                        ]
+                    }
+                ]
+            }, 
+            'ROO': {
+                name: 'Rondonópolis',
+                phases: [
+                    {
+                        id: 2, label: '2ª Fase', link: 'https://bit.ly/BCC2aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'AOC', n: 'Arq. e Org. de Computadores', p: 'Prof. Pierre' },
+                            { d: 'Terça', c: 'PIPDD', n: 'Prop. Intelectual', p: 'Prof. Dr. Everton' },
+                            { d: 'Quarta', c: 'GA', n: 'Geometria Analítica', p: 'Prof. Dr. Jemy' },
+                            { d: 'Quinta', c: 'TMP', n: 'Teoria e Método de Pesquisa', p: 'Prof. Me. Breno' },
+                            { d: 'Sexta', c: 'CA1', n: 'Cálculo I', p: 'Prof. Dr. Jemy' }
+                        ],
+                        modular: { c: 'ALP2', n: 'Algoritmos II', p: 'Christhian', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                    },
+                    {
+                        id: 4, label: '4ª Fase', link: 'https://bit.ly/BCC4aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'F1', n: 'Física I', p: 'Prof. Dr. Everton' },
+                            { d: 'Terça', c: 'ED2', n: 'Estutura Dados II', p: 'Prof. Christhian' },
+                            { d: 'Quarta', c: 'IBD', n: 'Introdução a Banco de Dados', p: 'Prof. Me. Breno' },
+                            { d: 'Quinta', c: 'CN', n: 'Cálculo Numérico', p: 'Prof. Dr. Jemy' },
+                            { d: 'Sexta', c: 'ES1', n: 'Engenharia Software I', p: 'Prof. Humberto' }
+                        ],
+                        modular: { c: 'LRC', n: 'Laboratório de Redes', p: 'Pierre', d: '30/03 a 01/04; 11/05 a 15/05; 15/06 a 19/06' }
+                    },
+                    {
+                        id: 6, label: '6ª Fase', link: 'https://bit.ly/BCC6aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'DSW', n: 'Desenvolvimento de Sistemas Web', p: 'Prof. Adriano' },
+                            { d: 'Terça', c: 'SO', n: 'Sistemas Operacionais', p: 'Prof. Pierre' },
+                            { d: 'Quarta', c: 'SE', n: 'Sistemas Embarcados', p: 'Prof. Dr. Max' },
+                            { d: 'Quinta', c: 'PAD', n: 'Processamento de Alto Desempenho', p: 'Prof. Humberto' },
+                            { d: 'Sexta', c: 'SM', n: 'Sistemas Multimídia', p: 'Prof. Me. Breno' }
+                        ],
+                        modular: null
+                    },
+                    {
+                        id: 8, label: '8ª Fase', link: 'https://bit.ly/BCC8aFase',
+                        schedule: [
+                            { d: 'Segunda', c: 'PI', n: 'Processamento de Imagens', p: 'Prof. Dr. Carlos' },
+                            { d: 'Terça', c: 'IA', n: 'Inteligência Artificial', p: 'Prof. Adriano' },
+                            { d: 'Quarta', c: 'SD', n: 'Sistemas Distribuídos', p: 'Prof. Humberto' },
+                            { d: 'Quinta', c: 'CF', n: 'Computação Forense', p: 'Prof. Dr. Everton' },
+                            { d: 'Sexta', c: 'RVA', n: 'Realidade Virtual', p: 'Prof. Adriano' }
+                        ],
+                        extras: [
+                            { c: 'TCC I', n: 'Trabalho de Conclusão de Curso I', p: 'Prof. Christhian' },
+                            { c: 'TCC II', n: 'Trabalho de Conclusão de Curso II', p: 'Prof. Dr. Obana' },
+                            { c: 'ECS I', n: 'Estágio Curricular Supervisionado I', p: 'Prof. Dr. Ubirajara' },
+                            { c: 'ECS II', n: 'Estágio Curricular Supervisionado II', p: 'Prof. Me. Wesley' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // --- APP LOGIC ---
+        const app = {
+            state: {
+                view: 'secomp', // Abrir a SECOMP por padrão para visualização das alterações
+                campus: 'AIA',
+                phaseIdx: 0,
+                chartInstance: null
+            },
+
+            init() {
+                this.updateView();
+                // Ocultamos o modal no início para não atrapalhar a visualização da landpage da SECOMP
+                // setTimeout(() => this.toggleModal('alxnder-modal', true), 1000);
+            },
+
+            toggleModal(id, show) {
+                const el = document.getElementById(id);
+                if (show) {
+                    el.classList.remove('pointer-events-none');
+                    el.classList.remove('opacity-0');
+                } else {
+                    el.classList.add('opacity-0');
+                    el.classList.add('pointer-events-none');
+                }
+            },
+
+            navigate(viewName) {
+                this.state.view = viewName;
+                this.updateView();
+                
+                // Update nav classes
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-brand-500', 'bg-slate-800'));
+                const activeNav = document.getElementById('nav-' + viewName);
+                if(activeNav) activeNav.classList.add('active');
+            },
+
+            setCampus(code) {
+                this.state.campus = code;
+                this.state.phaseIdx = 0;
+                this.renderSchedule();
+                
+                // Toggle Tab Styles
+                const btnAIA = document.getElementById('tab-aia');
+                const btnROO = document.getElementById('tab-roo');
+                const activeClass = 'bg-brand-600 text-white shadow-md';
+                const inactiveClass = 'text-slate-400 hover:text-white';
+
+                if(code === 'AIA') {
+                    btnAIA.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeClass}`;
+                    btnROO.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${inactiveClass}`;
+                } else {
+                    btnAIA.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${inactiveClass}`;
+                    btnROO.className = `px-6 py-2 rounded-lg text-sm font-bold transition-all ${activeClass}`;
+                }
+            },
+
+            setPhase(idx) {
+                this.state.phaseIdx = idx;
+                this.renderSchedule();
+            },
+
+            updateView() {
+                const views = ['schedule', 'guide', 'secomp'];
+                views.forEach(v => {
+                    const el = document.getElementById('view-' + v);
+                    if(el) el.classList.add('hidden');
+                });
+                
+                const activeEl = document.getElementById('view-' + this.state.view);
+                if(activeEl) activeEl.classList.remove('hidden');
+
+                if(this.state.view === 'schedule') {
+                    this.setCampus(this.state.campus); // trigger render
+                }
+            },
+
+            renderSchedule() {
+                const dataSet = data[this.state.campus];
+                const phase = dataSet.phases[this.state.phaseIdx];
+                const container = document.getElementById('schedule-container');
+                const tabsContainer = document.getElementById('phase-tabs');
+
+                // Render Tabs
+                tabsContainer.innerHTML = dataSet.phases.map((p, i) => `
+                    <button onclick="app.setPhase(${i})" 
+                        class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all border ${i === this.state.phaseIdx ? 'bg-brand-500 border-brand-500 text-white shadow-lg shadow-brand-500/25' : 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-white'}">
+                        ${p.label}
+                    </button>
+                `).join('');
+
+                // Render Content
+                let html = `
+                    <div class="glass-panel rounded-2xl p-6 relative overflow-hidden animate-slide-up">
+                        <!-- Top Light Effect -->
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-cyan-400"></div>
+                        
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                            <div>
+                                <h2 class="text-2xl font-bold text-white">${phase.label}</h2>
+                                <span class="text-slate-400 text-sm font-mono"><i class="fa-regular fa-clock text-brand-500"></i> 19h00 - 22h30</span>
+                                
+                                <!-- Google Calendar Link -->
+                                <div class="mt-2">
+                                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ADICIONAR NA SUA AGENDA GOOGLE:</p>
+                                    <a href="${phase.link}" target="_blank" class="inline-flex items-center gap-2 text-brand-400 hover:text-white bg-brand-500/10 hover:bg-brand-500/20 px-3 py-1 rounded text-xs font-mono transition-colors border border-brand-500/20">
+                                        <i class="fa-solid fa-link"></i> ${phase.link}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-xl border border-slate-700/50">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-800/80 text-slate-400 text-xs uppercase tracking-wider border-b border-slate-700">
+                                        <th class="p-4">Dia</th>
+                                        <th class="p-4">Sigla</th>
+                                        <th class="p-4">Disciplina</th>
+                                        <th class="p-4">Professor</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-700/50 text-sm bg-slate-900/40">
+                                    ${phase.schedule.map(s => `
+                                        <tr class="hover:bg-slate-800/50 transition-colors">
+                                            <td class="p-4 font-mono text-brand-400">${s.d}</td>
+                                            <td class="p-4 font-bold text-white">${s.c}</td>
+                                            <td class="p-4 text-slate-300">${s.n}</td>
+                                            <td class="p-4 text-slate-400"><i class="fa-regular fa-user mr-1 opacity-50"></i> ${s.p}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Modular Discipline -->
+                        ${phase.modular ? `
+                        <div class="mt-4 bg-emerald-900/20 border border-emerald-500/20 rounded-xl p-4 flex items-start gap-4">
+                            <div class="text-emerald-400 text-xl"><i class="fa-solid fa-cubes-stacked"></i></div>
+                            <div>
+                                <h4 class="text-emerald-400 font-bold text-xs uppercase tracking-wider mb-1">Disciplina Modular</h4>
+                                <p class="text-white font-semibold">${phase.modular.c} - ${phase.modular.n}</p>
+                                <p class="text-slate-400 text-xs mt-1">Prof. ${phase.modular.p} • <span class="text-emerald-200 font-mono">${phase.modular.d}</span></p>
+                            </div>
+                        </div>` : ''}
+
+                        <!-- Extras (TCC/Estagio) -->
+                        ${phase.extras ? `
+                        <div class="mt-4 bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-4">
+                            <h4 class="text-indigo-400 font-bold text-xs uppercase tracking-wider mb-3"><i class="fa-solid fa-graduation-cap mr-1"></i> TCC & Estágio (Contraturno)</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${phase.extras.map(e => `
+                                    <div class="bg-indigo-950/30 p-2 rounded border border-indigo-500/10 flex justify-between items-center">
+                                        <span class="text-indigo-200 text-sm font-semibold">${e.c}</span>
+                                        <span class="text-slate-400 text-xs">${e.p}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>` : ''}
+                    </div>
+                `;
+
+                container.innerHTML = html;
+                this.updateChart(phase);
+            },
+
+            updateChart(phase) {
+                const ctx = document.getElementById('workloadChart');
+                if(!ctx) return;
+
+                if(this.state.chartInstance) {
+                    this.state.chartInstance.destroy();
+                }
+
+                // Count classes per day
+                const counts = { 'Segunda': 0, 'Terça': 0, 'Quarta': 0, 'Quinta': 0, 'Sexta': 0 };
+                phase.schedule.forEach(s => counts[s.d]++);
+
+                this.state.chartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(counts),
+                        datasets: [{
+                            label: 'Aulas',
+                            data: Object.values(counts),
+                            backgroundColor: '#0ea5e9',
+                            borderRadius: 6,
+                            barThickness: 30
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, max: 2, ticks: { color: '#94a3b8', stepSize: 1 }, grid: { color: '#334155' } },
+                            x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+            // Default Nav para a vista aberta
+            document.getElementById('nav-secomp').classList.add('active');
+        });
+    </script>
+</body>
+</html>
