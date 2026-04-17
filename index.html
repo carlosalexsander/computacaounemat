@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR"> 
 <head> 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YKYPX7JBTP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKYPX7JBTP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-YKYPX7JBTP');
-</script>
+      gtag('config', 'G-YKYPX7JBTP');
+    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNEMAT-Alto Araguaia/Rondonópolis</title>
 
-    <!-- Tailwind CSS -->
+    <!-- O script do Tailwind DEVE vir antes da configuração -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+    <!-- Tailwind Configuração -->
     <script>
         tailwind.config = {
             theme: {
@@ -65,8 +57,17 @@
                     }
                 }
             }
-        }
+        };
     </script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -93,13 +94,21 @@
         .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 200ms, transform 200ms; }
     </style>
 </head>
-<body class="bg-dark-900 text-slate-200 h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white">
+<body class="bg-dark-900 text-slate-200 h-screen flex overflow-hidden selection:bg-brand-500 selection:text-white relative">
+
+    <!-- Overlay escuro para mobile quando o menu está aberto -->
+    <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden md:hidden backdrop-blur-sm transition-opacity duration-300"></div>
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-dark-800 border-r border-slate-700 flex flex-col z-20 shadow-xl hidden md:flex">
+    <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-dark-800 border-r border-slate-700 flex flex-col z-40 shadow-2xl">
+        <!-- Botão de fechar visível apenas no mobile -->
+        <button onclick="app.toggleSidebar()" class="md:hidden absolute top-4 right-4 text-slate-400 hover:text-white p-2 focus:outline-none">
+            <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+
         <!-- Header / Logo -->
-        <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50">
-            <div class="w-20 h-20 mb-3 relative">
+        <div class="p-6 flex flex-col items-center justify-center border-b border-slate-700/50 mt-4 md:mt-0">
+            <div class="w-24 h-24 mb-3 relative">
                 <!-- Logo Image Placeholder -->
                 <img src="logo_bcc_vertical_fundo_transparente_texto_branco.png" 
                      alt="BCC Logo" 
@@ -185,12 +194,18 @@
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col min-w-0 bg-dark-900 relative">
         
-        <!-- Header Mobile -->
-        <header class="md:hidden bg-dark-800 border-b border-slate-700 p-4 flex justify-between items-center z-10">
-            <span class="font-bold text-white">UNEMAT-AIA/ROO</span>
+        <!-- Header Mobile com Botão de Menu -->
+        <header class="md:hidden bg-dark-800 border-b border-slate-700 p-4 flex justify-between items-center z-10 shrink-0 shadow-md">
+            <div class="flex items-center gap-4">
+                <!-- Botão Hamburger -->
+                <button onclick="app.toggleSidebar()" class="text-slate-300 hover:text-white focus:outline-none p-1">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+                <span class="font-bold text-white text-sm truncate">UNEMAT-AIA/ROO</span>
+            </div>
             <div class="flex gap-4">
-                <button onclick="app.navigate('secomp')" class="text-purple-400"><i class="fa-solid fa-microchip"></i></button>
-                <button onclick="app.navigate('schedule')" class="text-brand-400"><i class="fa-solid fa-calendar-days"></i></button>
+                <button onclick="app.navigate('secomp')" class="text-purple-400 p-1 hover:bg-slate-700 rounded transition-colors"><i class="fa-solid fa-microchip"></i></button>
+                <button onclick="app.navigate('schedule')" class="text-brand-400 p-1 hover:bg-slate-700 rounded transition-colors"><i class="fa-solid fa-calendar-days"></i></button>
             </div>
         </header>
 
@@ -318,7 +333,6 @@
                             Ler Documento Oficial <i class="fa-solid fa-arrow-right"></i>
                         </a>
                     </div>
-
                 </div>
             </div>
 
@@ -392,48 +406,6 @@
                     </div>
                 </div>
 
-                <!-- Atrações Especiais (HackaTIU, Jogos, Cosplay, Robôs) -->
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-t-pink-500">
-                    <div class="flex flex-col md:flex-row justify-between md:items-end mb-6 gap-4">
-                        <div>
-                            <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
-                                <i class="fa-solid fa-rocket text-pink-400"></i> Atrações e Competições
-                            </h2>
-                            <p class="text-slate-300 text-sm">Dias 06 e 07 de Junho: Um fim de semana de imersão geek, cultura maker e e-sports.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-pink-500/50 transition-colors group">
-                            <i class="fa-solid fa-code text-3xl text-pink-400 mb-4 group-hover:scale-110 transition-transform"></i>
-                            <h3 class="font-bold text-white text-lg mb-1">HackaTIU</h3>
-                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
-                            <p class="text-sm text-slate-400">Maratona de programação e inovação para o desenvolvimento acelerado de soluções locais.</p>
-                        </div>
-                        
-                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
-                            <i class="fa-solid fa-gamepad text-3xl text-brand-400 mb-4 group-hover:scale-110 transition-transform"></i>
-                            <h3 class="font-bold text-white text-lg mb-1">Jogos Digitais</h3>
-                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
-                            <p class="text-sm text-slate-400">Competição acirrada de e-sports e desafio de desenvolvimento de jogos eletrônicos.</p>
-                        </div>
-
-                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-purple-500/50 transition-colors group">
-                            <i class="fa-solid fa-mask text-3xl text-purple-400 mb-4 group-hover:scale-110 transition-transform"></i>
-                            <h3 class="font-bold text-white text-lg mb-1">Concurso Cosplay</h3>
-                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">07 de Junho</div>
-                            <p class="text-sm text-slate-400">Desfile e caracterização para celebrar a cultura pop, anime e a vibrante comunidade geek.</p>
-                        </div>
-
-                        <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700 hover:border-emerald-500/50 transition-colors group">
-                            <i class="fa-solid fa-robot text-3xl text-emerald-400 mb-4 group-hover:scale-110 transition-transform"></i>
-                            <h3 class="font-bold text-white text-lg mb-1">Exposição de Robôs</h3>
-                            <div class="inline-block bg-slate-900 text-slate-300 text-[10px] px-2 py-1 rounded mb-2 border border-slate-700">06 e 07 de Junho</div>
-                            <p class="text-sm text-slate-400">Mostra de robótica focada na criatividade com material reciclável e projetos Arduino.</p>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Programação Atualizada -->
                 <div id="programacao" class="glass-panel p-8 rounded-2xl border-t-4 border-t-purple-500 scroll-mt-6">
                     
@@ -458,6 +430,34 @@
                         </div>
                     </div>
                     
+                    <!-- Infraestrutura -->
+                    <div class="bg-slate-800/40 rounded-xl border border-slate-700 p-6 mb-8 shadow-lg">
+                        <h3 class="font-bold text-white text-lg mb-4"><i class="fa-solid fa-building text-brand-400 mr-2"></i>Infraestrutura do Evento</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 flex items-center gap-4 hover:border-brand-500/50 transition-colors">
+                                <i class="fa-solid fa-users-rectangle text-3xl text-purple-400"></i>
+                                <div>
+                                    <strong class="text-white block text-sm">Auditório Principal</strong>
+                                    <span class="text-slate-400 text-xs">250 assentos</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 flex items-center gap-4 hover:border-brand-500/50 transition-colors">
+                                <i class="fa-solid fa-people-group text-3xl text-pink-400"></i>
+                                <div>
+                                    <strong class="text-white block text-sm">Auditório Secundário</strong>
+                                    <span class="text-slate-400 text-[11px]">130 assentos (Atividades em grupo/Hackathon)</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 flex items-center gap-4 hover:border-brand-500/50 transition-colors">
+                                <i class="fa-solid fa-computer text-3xl text-emerald-400"></i>
+                                <div>
+                                    <strong class="text-white block text-sm">3 Laboratórios de Informática</strong>
+                                    <span class="text-slate-400 text-[11px]">Bloco 1 (14), Bloco 2 (20), Bloco 3 (22) computadores</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="space-y-8">
                         
                         <!-- Fim de Semana -->
@@ -470,14 +470,14 @@
                                     <h4 class="text-brand-400 font-bold mb-4 font-mono uppercase tracking-wider border-b border-slate-700/50 pb-2">06 de junho (Sábado)</h4>
                                     <div class="space-y-4">
                                         <div class="flex items-start gap-4">
-                                            <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">08:00h</div>
+                                            <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">A partir das 08:00h</div>
                                             <div class="border-l-2 border-brand-500/50 pl-4">
                                                 <strong class="text-white block text-base">Credenciamento e Abertura do HackaTIU</strong>
                                                 <p class="text-slate-400">Hackathon Oficial da SECOMP.</p>
                                             </div>
                                         </div>
                                         <div class="flex items-start gap-4">
-                                            <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">O dia todo</div>
+                                            <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">O dia todo</div>
                                             <div class="border-l-2 border-slate-600 pl-4">
                                                 <strong class="text-white block text-base">Maratona de Desenvolvimento</strong>
                                                 <p class="text-slate-400">Desenvolvimento de software, mentorias e ideação.</p>
@@ -490,14 +490,14 @@
                                     <h4 class="text-pink-400 font-bold mb-4 font-mono uppercase tracking-wider border-b border-slate-700/50 pb-2">07 de junho (Domingo)</h4>
                                     <div class="space-y-4">
                                         <div class="flex items-start gap-4">
-                                            <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">Manhã/Tarde</div>
+                                            <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">Manhã/Tarde</div>
                                             <div class="border-l-2 border-slate-600 pl-4">
                                                 <strong class="text-white block text-base">Reta final do HackaTIU</strong>
                                                 <p class="text-slate-400">Finalização e submissão dos projetos.</p>
                                             </div>
                                         </div>
                                         <div class="flex items-start gap-4">
-                                            <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">16:00h</div>
+                                            <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">16:00h</div>
                                             <div class="border-l-2 border-pink-500/50 pl-4">
                                                 <span class="bg-pink-500/20 text-pink-300 text-[10px] px-2 py-0.5 rounded border border-pink-500/20 uppercase font-bold mb-1 inline-block">Premiação em Dinheiro</span>
                                                 <strong class="text-white block text-base">Grande Competição de Cosplay</strong>
@@ -505,7 +505,7 @@
                                             </div>
                                         </div>
                                         <div class="flex items-start gap-4">
-                                            <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">18:00h</div>
+                                            <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">18:00h</div>
                                             <div class="border-l-2 border-brand-500/50 pl-4">
                                                 <strong class="text-white block text-base">Pitch final do HackaTIU</strong>
                                                 <p class="text-slate-400">Apresentação das equipes e premiação.</p>
@@ -523,14 +523,14 @@
                             </div>
                             <div class="p-6 space-y-4 text-sm">
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:00h</div>
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h</div>
                                     <div class="border-l-2 border-slate-600 pl-4">
                                         <strong class="text-white block text-base">Credenciamento Geral</strong>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:30h</div>
-                                    <div class="border-l-2 border-yellow-500/50 pl-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:30h</div>
+                                    <div class="border-l-2 border-yellow-500/50 pl-4 w-full">
                                         <span class="bg-yellow-500/20 text-yellow-300 text-[10px] px-2 py-0.5 rounded border border-yellow-500/20 uppercase font-bold mb-2 inline-block">Palestra Magna</span>
                                         <strong class="text-white block text-lg mb-1">Palestra Magna de Abertura</strong>
                                         <div class="space-y-1 mt-2 bg-slate-900/50 p-3 rounded-lg border border-slate-700">
@@ -550,7 +550,23 @@
                             </div>
                             <div class="p-6 space-y-6 text-sm">
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:30h</div>
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">14:00h às 17:00h</div>
+                                    <div class="border-l-2 border-orange-500/50 pl-4 w-full">
+                                        <span class="bg-orange-500/20 text-orange-300 text-[10px] px-2 py-0.5 rounded border border-orange-500/20 uppercase font-bold mb-2 inline-block">Oficina</span>
+                                        <strong class="text-white block text-lg mb-1">Liderança, Comunicação e Inteligência Emocional (CITROO)</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Ambiente de Inovação (PIXEL)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h às 22:30h</div>
+                                    <div class="border-l-2 border-orange-500/50 pl-4 w-full">
+                                        <span class="bg-orange-500/20 text-orange-300 text-[10px] px-2 py-0.5 rounded border border-orange-500/20 uppercase font-bold mb-2 inline-block">Oficina</span>
+                                        <strong class="text-white block text-lg mb-1">Inovação: Validação e Modelagem de Negócios</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Ambiente de Inovação (PIXEL)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:30h</div>
                                     <div class="border-l-2 border-emerald-500/50 pl-4 w-full">
                                         <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded border border-emerald-500/20 uppercase font-bold mb-2 inline-block">Trilha EduTech</span>
                                         <strong class="text-white block text-lg mb-1">Palestra Magna</strong>
@@ -571,7 +587,23 @@
                             </div>
                             <div class="p-6 space-y-6 text-sm">
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:30h</div>
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h às 20:30h</div>
+                                    <div class="border-l-2 border-lime-500/50 pl-4 w-full">
+                                        <span class="bg-lime-500/20 text-lime-300 text-[10px] px-2 py-0.5 rounded border border-lime-500/20 uppercase font-bold mb-2 inline-block">Palestra / Workshop</span>
+                                        <strong class="text-white block text-lg mb-1">Inteligência Artificial para Educadores</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Auditório Quero-quero</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h às 22:30h</div>
+                                    <div class="border-l-2 border-orange-500/50 pl-4 w-full">
+                                        <span class="bg-orange-500/20 text-orange-300 text-[10px] px-2 py-0.5 rounded border border-orange-500/20 uppercase font-bold mb-2 inline-block">Oficina</span>
+                                        <strong class="text-white block text-lg mb-1">Inovação: Marketing</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Ambiente de Inovação (PIXEL)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:30h</div>
                                     <div class="border-l-2 border-cyan-500/50 pl-4 w-full">
                                         <span class="bg-cyan-500/20 text-cyan-300 text-[10px] px-2 py-0.5 rounded border border-cyan-500/20 uppercase font-bold mb-2 inline-block">Vagas Limitadas</span>
                                         <strong class="text-white block text-lg mb-1">Oficina Prática</strong>
@@ -583,14 +615,11 @@
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:30h</div>
-                                    <div class="border-l-2 border-purple-500/50 pl-4 w-full">
-                                        <span class="bg-purple-500/20 text-purple-300 text-[10px] px-2 py-0.5 rounded border border-purple-500/20 uppercase font-bold mb-2 inline-block">Selo SBC / SOL</span>
-                                        <strong class="text-white block text-lg mb-1">Sessão de Pôsteres e Comunicações Orais</strong>
-                                        <div class="space-y-1 mt-2 bg-slate-900/50 p-3 rounded-lg border border-slate-700">
-                                            <p class="text-slate-300"><strong class="text-slate-400">Tema:</strong> Apresentação de Artigos e Resumos aprovados via JEMS</p>
-                                            <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Salas de Atividades</p>
-                                        </div>
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">21:00h às 22:30h</div>
+                                    <div class="border-l-2 border-lime-500/50 pl-4 w-full">
+                                        <span class="bg-lime-500/20 text-lime-300 text-[10px] px-2 py-0.5 rounded border border-lime-500/20 uppercase font-bold mb-2 inline-block">Palestra / Workshop</span>
+                                        <strong class="text-white block text-lg mb-1">Neurodiversidade na Prática: Inclusão Inteligente para Professores</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Auditório Quero-quero</p>
                                     </div>
                                 </div>
                             </div>
@@ -601,12 +630,37 @@
                             <div class="bg-gradient-to-r from-slate-700/80 to-slate-800 px-6 py-4 border-b border-slate-600">
                                 <h3 class="font-bold text-white text-lg"><i class="fa-solid fa-trophy text-amber-400 mr-3"></i>Encerramento (11 de junho - Quinta-feira)</h3>
                             </div>
-                            <div class="p-6 space-y-4 text-sm">
+                            <div class="p-6 space-y-6 text-sm">
                                 <div class="flex items-start gap-4">
-                                    <div class="text-slate-300 font-mono font-bold w-24 shrink-0 text-right">19:30h</div>
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h às 20:30h</div>
+                                    <div class="border-l-2 border-lime-500/50 pl-4 w-full">
+                                        <span class="bg-lime-500/20 text-lime-300 text-[10px] px-2 py-0.5 rounded border border-lime-500/20 uppercase font-bold mb-2 inline-block">Palestra / Atividade</span>
+                                        <strong class="text-white block text-lg mb-1">Saúde e bem-estar para educadores e alunos</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Auditório Quero-quero</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:00h às 22:30h</div>
+                                    <div class="border-l-2 border-orange-500/50 pl-4 w-full">
+                                        <span class="bg-orange-500/20 text-orange-300 text-[10px] px-2 py-0.5 rounded border border-orange-500/20 uppercase font-bold mb-2 inline-block">Oficina</span>
+                                        <strong class="text-white block text-lg mb-1">Como preparar um bom pitch</strong>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Ambiente de Inovação (PIXEL)</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">19:30h</div>
                                     <div class="border-l-2 border-amber-500/50 pl-4">
                                         <strong class="text-white block text-base">Atividades Finais e Premiações</strong>
-                                        <p class="text-slate-400">Encerramento das trilhas, painel final, sorteio de brindes e agradecimentos gerais.</p>
+                                        <p class="text-slate-400">Atividades finais das trilhas, painel de encerramento, sorteio de brindes e agradecimentos.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="text-slate-300 font-mono font-bold w-32 shrink-0 text-right">21:00h às 22:30h</div>
+                                    <div class="border-l-2 border-lime-500/50 pl-4 w-full">
+                                        <span class="bg-lime-500/20 text-lime-300 text-[10px] px-2 py-0.5 rounded border border-lime-500/20 uppercase font-bold mb-2 inline-block">Palestra / Workshop</span>
+                                        <strong class="text-white block text-lg mb-1">Sensibilização Educação Empreendedora</strong>
+                                        <p class="text-slate-400 mt-1">Professores ensino fundamental.</p>
+                                        <p class="text-brand-400 font-mono mt-1 text-xs"><i class="fa-solid fa-location-dot mr-1"></i>Auditório Quero-quero</p>
                                     </div>
                                 </div>
                             </div>
@@ -616,10 +670,51 @@
                         <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-slate-700 overflow-hidden shadow-lg mt-8">
                             <div class="bg-slate-700/50 px-6 py-4 border-b border-slate-600">
                                 <h3 class="font-bold text-white text-lg"><i class="fa-solid fa-arrows-spin text-brand-400 mr-3"></i>Atrações Contínuas (De 08 a 11 de junho)</h3>
-                                <p class="text-slate-400 text-xs mt-1">Disponíveis durante todo o evento para interação dos participantes.</p>
+                                <p class="text-slate-400 text-xs mt-1">Disponíveis durante todo o evento para interação dos participantes:</p>
                             </div>
                             <div class="p-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                                    
+                                    <!-- CodMaker -->
+                                    <div class="bg-gradient-to-br from-blue-900/20 to-purple-900/20 p-6 rounded-xl border border-blue-500/30 hover:border-blue-500/60 transition-colors lg:col-span-3">
+                                        <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+                                            <div class="w-14 h-14 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center text-3xl shrink-0 border border-blue-500/30">
+                                                <i class="fa-solid fa-robot"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-white font-bold text-xl mb-1">CodMaker (Lages - SC)</h4>
+                                                <div class="flex flex-wrap items-center gap-3">
+                                                    <span class="bg-blue-500/20 text-blue-300 text-[10px] px-2 py-0.5 rounded border border-blue-500/20 uppercase font-bold">Dias 08, 09 e 10 de junho</span>
+                                                    <span class="text-slate-400 text-sm">Experiência interativa educativa.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div class="bg-slate-900/60 p-5 rounded-lg border border-slate-700/50">
+                                                <strong class="text-emerald-400 block mb-2 text-base"><i class="fa-solid fa-child-reaching mr-2"></i>Robótica na Prática</strong>
+                                                <div class="mb-3"><span class="bg-emerald-900/40 text-emerald-300 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-emerald-500/20">Voltado para crianças e jovens</span></div>
+                                                <p class="text-sm text-slate-300 leading-relaxed">Aprendizado prático e dinâmico, com metodologia maker.</p>
+                                            </div>
+                                            <div class="bg-slate-900/60 p-5 rounded-lg border border-slate-700/50">
+                                                <strong class="text-purple-400 block mb-2 text-base"><i class="fa-solid fa-graduation-cap mr-2"></i>IA para Educação</strong>
+                                                <div class="mb-3"><span class="bg-purple-900/40 text-purple-300 px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border border-purple-500/20">Voltado para professores e profissionais</span></div>
+                                                <ul class="text-sm text-slate-300 space-y-2 list-disc ml-4">
+                                                    <li>Montagem de projetos reais de robótica.</li>
+                                                    <li>Demonstrações e aplicações práticas de Inteligência Artificial.</li>
+                                                    <li>Programação ao vivo com orientação de Professores Facilitadores.</li>
+                                                    <li>Como a IA pode transformar o ensino e a criação de conteúdo.</li>
+                                                    <li>Conteúdo aplicado para educadores e profissionais em inovação.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-800/80 p-4 rounded-lg border border-slate-700/50 hover:border-blue-500/50 transition-colors">
+                                        <strong class="text-white flex items-center gap-2 mb-2"><i class="fa-solid fa-file-lines text-blue-400"></i> Sessão de Pôsteres e Comunicações</strong>
+                                        <p class="text-slate-400">Apresentação de Artigos e Resumos aprovados via JEMS (Selo SBC/SOL).</p>
+                                        <p class="text-yellow-500 font-mono mt-2 text-[10px] uppercase font-bold"><i class="fa-regular fa-clock mr-1"></i> Data e Local a definir</p>
+                                    </div>
                                     <div class="bg-slate-800/80 p-4 rounded-lg border border-slate-700/50 hover:border-brand-500/50 transition-colors">
                                         <strong class="text-white flex items-center gap-2 mb-2"><i class="fa-solid fa-truck text-brand-400"></i> Carreta da Ciência</strong>
                                         <p class="text-slate-400">Exposição interativa e itinerante focada na difusão científica.</p>
@@ -633,12 +728,12 @@
                                         <p class="text-slate-400">Interaja de perto com as máquinas desenvolvidas pelo nosso ecossistema acadêmico.</p>
                                     </div>
                                     <div class="bg-slate-800/80 p-4 rounded-lg border border-slate-700/50 hover:border-purple-500/50 transition-colors">
-                                        <strong class="text-white flex items-center gap-2 mb-2"><i class="fa-solid fa-gamepad text-purple-400"></i> Jogos Digitais</strong>
-                                        <p class="text-slate-400">Competição de jogos e torneios abertos ao longo da semana.</p>
+                                        <strong class="text-white flex items-center gap-2 mb-2"><i class="fa-solid fa-gamepad text-purple-400"></i> Competição de Jogos Digitais</strong>
+                                        <p class="text-slate-400">Torneios abertos ao longo da semana.</p>
                                     </div>
-                                    <div class="bg-slate-800/80 p-4 rounded-lg border border-slate-700/50 hover:border-pink-500/50 transition-colors lg:col-span-2">
+                                    <div class="bg-slate-800/80 p-4 rounded-lg border border-slate-700/50 hover:border-pink-500/50 transition-colors lg:col-span-1">
                                         <strong class="text-white flex items-center gap-2 mb-2"><i class="fa-solid fa-venus-mars text-pink-400"></i> Projeto Meninas Digitais</strong>
-                                        <p class="text-slate-400">Painéis e ações integradas focadas em inspirar e fortalecer a presença feminina na tecnologia.</p>
+                                        <p class="text-slate-400">Painéis e ações focadas em inspirar e fortalecer a presença feminina na tecnologia.</p>
                                     </div>
                                 </div>
                             </div>
@@ -646,8 +741,7 @@
                         
                     </div>
                 </div>
-                
-                <!-- Call for Papers Section (Inspirado no SBC / ERIMT) -->
+
                 <div id="chamada-trabalhos" class="glass-panel p-8 md:p-12 rounded-2xl border-t-4 border-t-brand-500 scroll-mt-6 relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
                         <i class="fa-solid fa-file-signature text-9xl"></i>
@@ -678,7 +772,9 @@
                                         <tbody class="divide-y divide-slate-700/50">
                                             <tr class="hover:bg-slate-700/30 transition-colors">
                                                 <td class="p-5 text-slate-300 font-medium">Submissão de Artigos (Completos e Curtos)</td>
-                                                <td class="p-5 text-right text-brand-400 font-mono font-bold whitespace-nowrap">Até 18/04/2026</td>
+                                                <td class="p-5 text-right text-brand-400 font-mono font-bold whitespace-nowrap">
+                                                    <span class="line-through text-slate-500 text-xs mr-1 font-normal">18/04/2026</span><br class="md:hidden">Até 26/04/2026
+                                                </td>
                                             </tr>
                                             <tr class="hover:bg-slate-700/30 transition-colors">
                                                 <td class="p-5 text-slate-300 font-medium">Submissão de Minicursos e Oficinas</td>
@@ -821,7 +917,7 @@
                             <div class="bg-indigo-900/20 border border-indigo-500/30 p-8 rounded-2xl relative overflow-hidden">
                                 <div class="absolute -right-6 -bottom-6 opacity-10">
                                     <i class="fa-solid fa-book-journal-whills text-9xl"></i>
-                                </div>
+                                </div> 
                                 <h4 class="text-xl font-bold text-indigo-300 mb-4 flex items-center gap-2 relative z-10"><i class="fa-solid fa-scale-balanced"></i> Instruções aos Autores</h4>
                                 <div class="space-y-4 text-sm text-slate-300 leading-relaxed relative z-10">
                                     <p>
@@ -831,9 +927,12 @@
                                         Todos os trabalhos devem ser redigidos em língua portuguesa e formatados de acordo com o modelo oficial da Sociedade Brasileira de Computação (SBC).
                                     </p>
                                     
-                                    <div class="pt-4 pb-2">
-                                        <a href="https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip" target="_blank" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-indigo-500/20">
+                                    <div class="pt-4 pb-2 flex flex-col sm:flex-row gap-4">
+                                        <a href="https://www.sbc.org.br/wp-content/uploads/2024/07/modelosparapublicaodeartigos.zip" target="_blank" class="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-indigo-500/20 text-center">
                                             <i class="fa-solid fa-download"></i> Baixar Modelo SBC (Template)
+                                        </a>
+                                        <a href="https://drive.google.com/file/d/1p4xgcuGNIgVfAJXvpVc8RRlckZBfzffM/view?usp=sharing" target="_blank" class="inline-flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-brand-400 border border-brand-500/30 px-5 py-3 rounded-lg font-bold transition-all shadow-lg hover:shadow-brand-500/20 text-center">
+                                            <i class="fa-solid fa-circle-info"></i> Orientações (Oficinas, Minicursos)
                                         </a>
                                     </div>
                                     
@@ -871,7 +970,7 @@
                         <!-- Coluna: Realização -->
                         <div class="flex flex-col items-center gap-3 w-full">
                             <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Realização</span>
-                            <div class="bg-white p-1 rounded-xl w-full max-w-[350px] h-36 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
+                            <div class="bg-white p-6 rounded-xl w-full max-w-[350px] h-36 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
                                 <img src="unemat.aia.roo.fundo.branco.png" alt="UNEMAT" class="max-w-full max-h-full object-contain">
                             </div>
                         </div>
@@ -879,7 +978,7 @@
                         <!-- Coluna: Apoio Institucional -->
                         <div class="flex flex-col items-center gap-3 w-full">
                             <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Apoio Institucional</span>
-                            <div class="bg-white p-1 rounded-xl w-full max-w-[200px] h-48 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
+                            <div class="bg-white p-6 rounded-xl w-full max-w-[220px] h-48 flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-black/50">
                                 <img src="Logo SBC.png" alt="Sociedade Brasileira de Computação" class="max-w-full max-h-full object-contain">
                             </div>
                         </div>
@@ -888,7 +987,7 @@
                         <div class="flex flex-col items-center gap-3 w-full">
                             <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Parceiros</span>
                             <!-- Aqui você pode adicionar as logos dos parceiros futuramente substituindo a div abaixo pela tag img equivalente -->
-                            <div class="border-2 border-dashed border-slate-600 rounded-xl w-full max-w-[240px] h-24 flex items-center justify-center bg-slate-800/30 hover:border-brand-500 hover:text-brand-400 transition-colors cursor-pointer group">
+                            <div class="border-2 border-dashed border-slate-600 rounded-xl w-full max-w-[350px] h-36 flex items-center justify-center bg-slate-800/30 hover:border-brand-500 hover:text-brand-400 transition-colors cursor-pointer group">
                                 <span class="text-slate-500 font-medium text-sm flex flex-col items-center gap-1 group-hover:text-brand-400 transition-colors">
                                     <i class="fa-solid fa-plus text-lg"></i>
                                     Seja um Parceiro
@@ -898,7 +997,7 @@
 
                     </div>
                 </div>
-                                
+                
                 <!-- Redes Sociais e Cidade -->
                 <div class="flex flex-col sm:flex-row gap-6 justify-center">
                     <a href="https://www.instagram.com/computacao.unemataia" target="_blank" class="glass-panel p-6 rounded-2xl flex-1 flex flex-col items-center justify-center gap-3 hover:bg-slate-800/80 hover:border-pink-500/50 transition-all group">
@@ -910,14 +1009,14 @@
                             <p class="text-pink-400 text-sm font-mono">@computacao.unemataia</p>
                         </div>
                     </a>
-                    
+
                     <a href="https://www.youtube.com/watch?v=aAYBaHM5ABU" target="_blank" class="glass-panel p-6 rounded-2xl flex-1 flex flex-col items-center justify-center gap-3 hover:bg-slate-800/80 hover:border-red-500/50 transition-all group">
                         <div class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl group-hover:scale-110 transition-transform shadow-lg shadow-red-500/25">
                             <i class="fa-brands fa-youtube"></i>
                         </div>
                         <div class="text-center">
                             <p class="text-white font-bold text-lg">Conheça Rondonópolis</p>
-                            <p class="text-red-400 text-sm font-mono">Assista</p>
+                            <p class="text-red-400 text-sm font-mono">Assista ao Vídeo Oficial</p>
                         </div>
                     </a>
                 </div>
@@ -1099,7 +1198,8 @@
                 view: 'secomp', // Abrir a SECOMP por padrão para visualização das alterações
                 campus: 'AIA',
                 phaseIdx: 0,
-                chartInstance: null
+                chartInstance: null,
+                isSidebarOpen: false
             },
 
             init() {
@@ -1119,9 +1219,33 @@
                 }
             },
 
+            toggleSidebar(forceClose = false) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                
+                if (forceClose) {
+                    this.state.isSidebarOpen = false;
+                } else {
+                    this.state.isSidebarOpen = !this.state.isSidebarOpen;
+                }
+
+                if (this.state.isSidebarOpen) {
+                    sidebar.classList.remove('-translate-x-full');
+                    overlay.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+            },
+
             navigate(viewName) {
                 this.state.view = viewName;
                 this.updateView();
+                
+                // Fecha o menu no mobile após clicar
+                if (window.innerWidth < 768) {
+                    this.toggleSidebar(true);
+                }
                 
                 // Update nav classes
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-brand-500', 'bg-slate-800'));
@@ -1186,7 +1310,6 @@
                 // Render Content
                 let html = `
                     <div class="glass-panel rounded-2xl p-6 relative overflow-hidden animate-slide-up">
-                        <!-- Top Light Effect -->
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-cyan-400"></div>
                         
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
@@ -1194,7 +1317,6 @@
                                 <h2 class="text-2xl font-bold text-white">${phase.label}</h2>
                                 <span class="text-slate-400 text-sm font-mono"><i class="fa-regular fa-clock text-brand-500"></i> 19h00 - 22h30</span>
                                 
-                                <!-- Google Calendar Link -->
                                 <div class="mt-2">
                                     <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">ADICIONAR NA SUA AGENDA GOOGLE:</p>
                                     <a href="${phase.link}" target="_blank" class="inline-flex items-center gap-2 text-brand-400 hover:text-white bg-brand-500/10 hover:bg-brand-500/20 px-3 py-1 rounded text-xs font-mono transition-colors border border-brand-500/20">
@@ -1227,7 +1349,6 @@
                             </table>
                         </div>
 
-                        <!-- Modular Discipline -->
                         ${phase.modular ? `
                         <div class="mt-4 bg-emerald-900/20 border border-emerald-500/20 rounded-xl p-4 flex items-start gap-4">
                             <div class="text-emerald-400 text-xl"><i class="fa-solid fa-cubes-stacked"></i></div>
@@ -1238,7 +1359,6 @@
                             </div>
                         </div>` : ''}
 
-                        <!-- Extras (TCC/Estagio) -->
                         ${phase.extras ? `
                         <div class="mt-4 bg-indigo-900/20 border border-indigo-500/20 rounded-xl p-4">
                             <h4 class="text-indigo-400 font-bold text-xs uppercase tracking-wider mb-3"><i class="fa-solid fa-graduation-cap mr-1"></i> TCC & Estágio (Contraturno)</h4>
