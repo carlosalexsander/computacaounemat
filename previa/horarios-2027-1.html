@@ -226,11 +226,20 @@ const LPOO15 = WEEK.sexta.concat(["28/06","30/06"]);
 const DSDM15 = WEEK.sexta.concat(["14/05","18/06"]);
 const HOLIDAYS_DDMM = ["25/03","26/03","19/04","20/04","21/04","27/05","28/05","07/06","08/06","09/06","10/06","11/06"];
 const MODWEEK_DDMM = MOD13;
-// Paleta com matizes bem separados (a original CORES_BLOCO do js/app.js:12 tinha dois
-// azuis quase idênticos — #0084bd e #0284c7 — difíceis de distinguir lado a lado).
-const CORES = ['#0369a1', '#15803d', '#7c3aed', '#b45309', '#be185d', '#0f766e'];
+// Paletas validadas com o método da skill dataviz (node scripts/validate_palette.js),
+// ancoradas nas duas cores oficiais da marca BCC (Manual de Identidade Visual 2025:
+// Ciano #00ADEF/#009EE0 e Verde #8DC63F) — a marca só define essas 2 cores + preto,
+// então os demais tons vêm da paleta categórica padrão da skill (validada para
+// separação sob daltonismo), nunca escolhidos de olho.
+// 6 cores para "Por fase" (dias da semana + modular) — pares ADJACENTES validados
+// (a ordem Seg->Sex é fixa, então só vizinhos precisam ser distintos):
+const CORES_DIA = ['#009EE0', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#8DC63F'];
+// 4 cores para "Por dia" (selos/pontos de fase) — pares QUAISQUER validados
+// (fases variam de um dia para outro, então duas quaisquer podem ficar lado a lado):
+const CORES_FASE = ['#009EE0', '#eb6834', '#1baf7a', '#4a3aa7'];
 const DIA_NOMES = ["Segunda","Terça","Quarta","Quinta","Sexta"];
 
+function profTxt(p) { return /SELETIVO|LETRAS/i.test(p) ? "Pendente" : p; }
 function cell(d, c, cod, n, p) {
   const pending = /SELETIVO|LETRAS/i.test(p);
   return { d, c, cod, n, p: pending ? "Pendente" : p, pend: pending };
@@ -391,7 +400,7 @@ function eventosDoCampus(campus) {
     });
     if (fase.modular) {
       const s = porCod[fase.modular.cod];
-      eventos.push({ faseIdx, faseLabel: fase.label, slot: 5, cod: fase.modular.cod, sigla: fase.modular.c, nome: fase.modular.n, professor: fase.modular.p, dates: s ? s.dates : [], tipo: 'modular' });
+      eventos.push({ faseIdx, faseLabel: fase.label, slot: 5, cod: fase.modular.cod, sigla: fase.modular.c, nome: fase.modular.n, professor: profTxt(fase.modular.p), dates: s ? s.dates : [], tipo: 'modular' });
     }
     if (fase.extras) {
       fase.extras.forEach(e => {
@@ -405,8 +414,8 @@ function eventosDoCampus(campus) {
   return eventos;
 }
 
-function corPorFase(faseIdx) { return CORES[faseIdx % CORES.length]; }
-function corPorSlot(slot) { return CORES[slot % CORES.length]; }
+function corPorFase(faseIdx) { return CORES_FASE[faseIdx % CORES_FASE.length]; }
+function corPorSlot(slot) { return CORES_DIA[slot % CORES_DIA.length]; }
 
 function diasUteisDoMes(y, mi) {
   const n = new Date(y, mi+1, 0).getDate();
@@ -474,10 +483,10 @@ function renderListaFases(campus) {
         <span class="prof ${c.pend?'pend':''}">👤 ${c.p}</span>
       </div>`;
     });
-    if (fase.modular) html += `<div class="pausa modular"><b>📦 Modular — ${fase.modular.cod}:</b> ${fase.modular.c} — ${fase.modular.n} · ${fase.modular.p} · <span class="mono">${fase.modular.d}</span></div>`;
+    if (fase.modular) html += `<div class="pausa modular"><b>📦 Modular — ${fase.modular.cod}:</b> ${fase.modular.c} — ${fase.modular.n} · ${profTxt(fase.modular.p)} · <span class="mono">${fase.modular.d}</span></div>`;
     if (fase.extras) {
       html += '<div class="extras-wrap"><b>🎓 TCC &amp; Estágio (contraturno)</b><div class="extras-grid">';
-      fase.extras.forEach(e => { html += `<div class="extra-item"><span class="cod">${e.cod} - ${e.c}</span><span>${e.p}</span></div>`; });
+      fase.extras.forEach(e => { html += `<div class="extra-item"><span class="cod">${e.cod} - ${e.c}</span><span>${profTxt(e.p)}</span></div>`; });
       html += '</div></div>';
     }
     html += '</div></div>';
@@ -495,11 +504,11 @@ function renderPorFase(campus) {
   const fase = d.fases[ST.faseIdx];
   const eventos = eventosDoCampus(campus).filter(e => e.faseIdx === ST.faseIdx);
   const dataCor = {}; // iso -> {cor, off}
-  eventos.forEach(e => { const cor = e.tipo==='modular' ? CORES[5] : corPorSlot(e.slot); e.dates.forEach(dd => { dataCor[iso(dd)] = cor; }); });
+  eventos.forEach(e => { const cor = e.tipo==='modular' ? CORES_DIA[5] : corPorSlot(e.slot); e.dates.forEach(dd => { dataCor[iso(dd)] = cor; }); });
 
   let legenda = '<div class="caixa legenda-cores">';
   fase.cells.forEach((c,slot) => { legenda += `<span><i style="background:${corPorSlot(slot)}"></i><b>${c.d}</b> — ${c.cod} · ${c.c} — ${c.n}</span>`; });
-  if (fase.modular) legenda += `<span><i style="background:${CORES[5]}"></i><b>Modular</b> — ${fase.modular.cod} · ${fase.modular.c} — ${fase.modular.n}</span>`;
+  if (fase.modular) legenda += `<span><i style="background:${CORES_DIA[5]}"></i><b>Modular</b> — ${fase.modular.cod} · ${fase.modular.c} — ${fase.modular.n}</span>`;
   legenda += '</div>';
 
   let grid = '<div class="caixa" style="padding:16px 18px"><div class="meses-grandes">';
