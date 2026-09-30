@@ -164,6 +164,7 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .aula-item:hover { background: rgba(255,255,255,0.04); }
 .aula-item .fase { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
 .aula-item .nome { font-weight: 600; font-size: 13.5px; }
+.aula-item .disc { font-size: 12.5px; color: var(--text-2); }
 .aula-item .quem { font-size: 11.5px; color: var(--muted); }
 .painel-dia .vazio { padding: 16px 20px; color: var(--muted); font-size: 13.5px; }
 
@@ -585,7 +586,7 @@ function renderPorDia(campus) {
     painel += '<div class="painel-dia vazio">Nenhuma aula neste dia.</div>';
   } else {
     listaSel.forEach(e => {
-      painel += `<button class="aula-item" onclick="irParaFase('${campus}', ${e.faseIdx})" title="Ver ${e.faseLabel} no calendário colorido"><span class="fase" style="background:${corPorFase(e.faseIdx)};color:${corTextoFase(e.faseIdx)}">${e.faseLabel}</span><span><span class="nome">${e.cod} - ${e.sigla}</span><br><span class="quem">${e.nome} · 👤 ${e.professor}</span></span></button>`;
+      painel += `<button class="aula-item" onclick="irParaFase('${campus}', ${e.faseIdx})" title="Ver ${e.faseLabel} no calendário colorido"><span class="fase" style="background:${corPorFase(e.faseIdx)};color:${corTextoFase(e.faseIdx)}">${e.faseLabel}</span><span><span class="nome">${e.cod} - ${e.sigla}</span><br><span class="disc">${e.nome}</span><br><span class="quem">👤 ${e.professor}</span></span></button>`;
     });
   }
   painel += '</aside>';
