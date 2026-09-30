@@ -3,59 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prévia · Horários 2027/1 · iALXnder</title>
+<title>Prévia · Horários 2027/1 · BCC UNEMAT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Google+Sans+Code:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>
-/* Design System Oficial ALXnder / iALXnder · UNEMAT (copiado de src/alxnder/atribuicao/static/alocacao/css/app.css) */
+/* Mesmo tema escuro do site principal (computacaounemat.github.io/index.html):
+   brand-500 #009EE0 (ciano oficial BCC), verde #8DC63F, dark-900/800, fonte Mesmerize. */
+@font-face {
+  font-family: 'Mesmerize';
+  src: url('../assets/fonts/mesmerize/mesmerize-light.ttf') format('truetype');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Mesmerize';
+  src: url('../assets/fonts/mesmerize/mesmerize-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
 :root {
-  --ialx-brand: #009ee0;
-  --ialx-brand-hover: #0081b8;
-  --ialx-green: #8dc63f;
-  --ialx-dark: #0f172a;
-  --ialx-surface: #1e293b;
-  --ialx-border: rgba(255, 255, 255, 0.12);
-  --ialx-text: #f8fafc;
-  --ialx-text-muted: #94a3b8;
-
-  --canvas: #f1f5f9;
-  --panel: #ffffff;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --text: #0f172a;
-  --text-2: #475569;
-  --muted: #64748b;
+  --canvas: #0b0d0f;
+  --panel: #16191c;
+  --panel-2: rgba(22, 25, 28, 0.7);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #f1f5f9;
+  --text-2: #cbd5e1;
+  --muted: #94a3b8;
   --brand: #009ee0;
-  --brand-hover: #0081b8;
-  --brand-soft: rgba(0, 158, 224, 0.10);
+  --brand-hover: #33b5e8;
+  --brand-soft: rgba(0, 158, 224, 0.15);
   --green: #8dc63f;
-  --green-dark: #659328;
-  --green-soft: rgba(141, 198, 63, 0.15);
-  --yellow: #ffce00;
-  --yellow-soft: #fff9db;
-  --yellow-text: #574500;
-  --red: #ef4444;
-  --red-dark: #b91c1c;
-  --red-soft: #fef2f2;
-  --listra: repeating-linear-gradient(135deg, #e2e8f0 0 6px, #f1f5f9 6px 12px);
+  --green-dark: #8dc63f;
+  --green-soft: rgba(141, 198, 63, 0.18);
+  --yellow-soft: rgba(245, 158, 11, 0.15);
+  --yellow-text: #fbbf24;
+  --red: #f87171;
+  --red-dark: #ef4444;
+  --listra: repeating-linear-gradient(135deg, #1e232a 0 6px, #0e1013 6px 12px);
 
-  --fonte: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Google Sans", Helvetica, Arial, sans-serif;
-  --mono: ui-monospace, "SF Mono", "Google Sans Code", Menlo, Consolas, monospace;
+  --fonte: 'Mesmerize', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --radius-lg: 14px;
 }
 * { box-sizing: border-box; }
-body { margin: 0; font-family: var(--fonte); font-size: 15px; line-height: 1.5; color: var(--text); background: var(--canvas); -webkit-font-smoothing: antialiased; }
-a { color: #0071e3; text-decoration: none; }
+body { margin: 0; font-family: var(--fonte); font-weight: 300; font-size: 15px; line-height: 1.5; color: var(--text); background: var(--canvas); -webkit-font-smoothing: antialiased; }
+a { color: var(--brand); text-decoration: none; }
 button { cursor: pointer; font: inherit; color: inherit; }
 .mono { font-family: var(--mono); }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0b0d0f; }
+::-webkit-scrollbar-thumb { background: #2a2e33; border-radius: 3px; }
 
-.ialx-global-bar { background: var(--ialx-dark); border-bottom: 1px solid var(--ialx-border); color: #f8fafc; position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+.ialx-global-bar { background: var(--canvas); border-bottom: 1px solid var(--border); color: var(--text); position: sticky; top: 0; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
 .ialx-bar-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; gap: 12px; flex-wrap: wrap; }
 .ialx-brand { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 1.05rem; }
-.ialx-brand .ialx-logo-badge { background: var(--ialx-brand); color: #fff; padding: 3px 8px; border-radius: 6px; font-size: .82rem; font-weight: 800; letter-spacing: .5px; }
-.ialx-brand .ialx-brand-sub { font-size: .78rem; color: var(--ialx-text-muted); font-weight: 500; border-left: 1px solid rgba(255,255,255,.2); padding-left: 8px; }
-.ialx-role-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(245,158,11,.2); color: #fbbf24; border: 1px solid rgba(245,158,11,.4); padding: 3px 9px; border-radius: 999px; font-size: .75rem; font-weight: 600; }
+.ialx-brand .ialx-logo-badge { background: var(--brand); color: #fff; padding: 3px 8px; border-radius: 6px; font-size: .82rem; font-weight: 800; letter-spacing: .5px; }
+.ialx-brand .ialx-brand-sub { font-size: .78rem; color: var(--muted); font-weight: 500; border-left: 1px solid rgba(255,255,255,.2); padding-left: 8px; }
+.ialx-role-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--yellow-soft); color: var(--yellow-text); border: 1px solid rgba(245,158,11,.4); padding: 3px 9px; border-radius: 999px; font-size: .75rem; font-weight: 600; }
 
 .shell { max-width: 1280px; margin: 0 auto; padding: 24px 16px 80px; }
 .page-head { margin-bottom: 18px; }
@@ -75,7 +81,7 @@ button { cursor: pointer; font: inherit; color: inherit; }
 .tab-item.verde.ativo { background: var(--green-dark); }
 .tab-item.fase-ativo { color: #fff; font-weight: 700; }
 .mes-aba { min-height: 36px; padding: 0 14px; border-radius: 20px; border: 1px solid var(--border-strong); background: var(--panel); font-size: 13px; }
-.mes-aba.ativo { background: var(--green-dark); border-color: var(--green-dark); color: #fff; font-weight: 600; }
+.mes-aba.ativo { background: var(--green-dark); border-color: var(--green-dark); color: #0b0d0f; font-weight: 700; }
 
 .caixa { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
 h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
@@ -91,19 +97,19 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .bloco-rotulo .ir { font-size: 10px; opacity: .85; margin-top: 2px; }
 .linha { display: grid; grid-template-columns: 100px 140px minmax(0,1fr) 190px; align-items: center; min-height: 52px; border-top: 1px solid var(--border); background: var(--panel); }
 .linha:first-child { border-top: none; }
-.linha:hover { background: #f8fafc; }
+.linha:hover { background: rgba(255,255,255,0.04); }
 .linha > span { padding: 8px 12px; }
 .linha .dsem { font-weight: 600; font-size: 14px; }
 .linha .cod { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 .linha .prof { font-size: 12.5px; color: var(--muted); }
-.linha .prof.pend { color: #a15c00; font-weight: 700; }
+.linha .prof.pend { color: var(--yellow-text); font-weight: 700; }
 .pausa { margin: 0; padding: 9px 62px; display: flex; gap: 10px; flex-wrap: wrap; font-size: 13px; background: var(--listra); color: #334155; border-top: 1px dashed var(--border-strong); }
 .pausa.modular { background: var(--yellow-soft); color: var(--yellow-text); }
-.extras-wrap { margin: 0; padding: 12px 62px 14px; background: rgba(99,102,241,.06); border-top: 1px dashed var(--border-strong); }
-.extras-wrap b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #4338ca; margin-bottom: 8px; }
+.extras-wrap { margin: 0; padding: 12px 62px 14px; background: rgba(99,102,241,.10); border-top: 1px dashed var(--border-strong); }
+.extras-wrap b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #a5b4fc; margin-bottom: 8px; }
 .extras-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
 .extra-item { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; display: flex; justify-content: space-between; gap: 8px; font-size: 12px; }
-.extra-item .cod { color: #4338ca; font-weight: 700; }
+.extra-item .cod { color: #a5b4fc; font-weight: 700; }
 
 .lateral { padding: 20px; display: flex; flex-direction: column; gap: 14px; position: sticky; top: 70px; }
 .meses { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 14px; }
@@ -115,7 +121,7 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .mini-grade button:hover { outline: 2px solid var(--brand); outline-offset: 1px; }
 .mini-grade .cab { color: var(--muted); height: 16px; font-family: var(--fonte); }
 .mini-grade .aula { background: var(--panel); border: 1.5px solid var(--brand); color: var(--brand); font-weight: 600; }
-.mini-grade .mod { background: #ffe873; color: #574500; border: 1.5px solid #f6e05e; }
+.mini-grade .mod { background: rgba(234,179,8,.22); color: var(--yellow-text); border: 1.5px solid rgba(234,179,8,.5); }
 .mini-grade .off { background: var(--listra); color: #334155; }
 .legenda { display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; }
 .legenda span { display: flex; align-items: center; gap: 8px; }
@@ -133,7 +139,7 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .cal-mini-grade button { cursor: pointer; }
 .cal-mini-grade button:hover { outline: 2px solid var(--brand); outline-offset: 1px; }
 .cal-mini-grade .cab { color: var(--muted); height: 16px; font-family: var(--fonte); font-weight: 500; }
-.cal-mini-grade .off { background: var(--listra); color: #334155; }
+.cal-mini-grade .off { background: var(--listra); color: var(--muted); }
 
 /* ---- View 3: calendário do semestre com painel do dia ---- */
 .cal-layout { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 20px; align-items: start; }
@@ -145,8 +151,8 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .dia .info { font-size: 10.5px; color: var(--muted); line-height: 1.25; }
 .dia .pontos { display: flex; gap: 4px; margin-top: auto; }
 .dia .pontos i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.dia.mod { background: #fff8d6; border-color: #f6e05e; }
-.dia.mod .info { color: #744210; }
+.dia.mod { background: rgba(234,179,8,.14); border-color: rgba(234,179,8,.45); }
+.dia.mod .info { color: var(--yellow-text); }
 .dia.off { background: var(--listra); border-color: var(--border); }
 .dia.fora { background: transparent; border-style: dashed; color: #94a3b8; cursor: default; }
 .dia.sel { box-shadow: 0 0 0 3px var(--brand); border-color: var(--brand); }
@@ -155,7 +161,7 @@ h2 { margin: 0; font-size: 1.15rem; font-weight: 700; }
 .painel-dia .topo small { color: var(--muted); font-size: 13px; text-transform: capitalize; }
 .painel-dia .topo h2 { font-size: 19px; margin-top: 2px; }
 .aula-item { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid var(--border); border-left: none; border-right: none; border-bottom: none; width: 100%; text-align: left; background: none; cursor: pointer; font: inherit; color: inherit; }
-.aula-item:hover { background: #f8fafc; }
+.aula-item:hover { background: rgba(255,255,255,0.04); }
 .aula-item .fase { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #fff; white-space: nowrap; }
 .aula-item .nome { font-weight: 600; font-size: 13.5px; }
 .aula-item .quem { font-size: 11.5px; color: var(--muted); }
@@ -233,10 +239,18 @@ const MODWEEK_DDMM = MOD13;
 // separação sob daltonismo), nunca escolhidos de olho.
 // 6 cores para "Por fase" (dias da semana + modular) — pares ADJACENTES validados
 // (a ordem Seg->Sex é fixa, então só vizinhos precisam ser distintos):
-const CORES_DIA = ['#009EE0', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#8DC63F'];
-// 4 cores para "Por dia" (selos/pontos de fase) — pares QUAISQUER validados
+// Passos "modo escuro" re-validados contra a superfície real do site (--panel #16191c) —
+// não é um espelhamento automático da versão clara: laranja/aqua/amarelo/magenta viram
+// os passos documentados da própria skill para escuro, e o verde da marca foi escurecido
+// (mantendo o matiz) até caber na faixa de luminosidade OKLCH exigida em modo escuro.
+const CORES_DIA = ['#009EE0', '#d95926', '#199e70', '#c98500', '#d55181', '#6b9c1f'];
+// 4 cores para "Por dia" (selos/pontos de fase) — pares QUAISQUER validados em modo escuro
 // (fases variam de um dia para outro, então duas quaisquer podem ficar lado a lado):
-const CORES_FASE = ['#009EE0', '#eb6834', '#1baf7a', '#4a3aa7'];
+const CORES_FASE = ['#009EE0', '#d95926', '#199e70', '#6b5bc4'];
+// Texto legível sobre cada cor de fase (preto para a maioria, branco só para o roxo —
+// checado com o mesmo validador, contrast(cor, '#fff'/'#000')).
+const TXT_FASE = ['#0b0d0f', '#0b0d0f', '#0b0d0f', '#ffffff'];
+function corTextoFase(i) { return TXT_FASE[i % TXT_FASE.length]; }
 const DIA_NOMES = ["Segunda","Terça","Quarta","Quinta","Sexta"];
 
 function profTxt(p) { return /SELETIVO|LETRAS/i.test(p) ? "Pendente" : p; }
@@ -474,7 +488,7 @@ function renderListaFases(campus) {
   let html = '<div class="duas-colunas"><div class="caixa">';
   d.fases.forEach((fase, i) => {
     const cor = corPorFase(i);
-    html += `<div class="bloco"><button class="bloco-rotulo" style="background:${cor}" onclick="irParaFase('${campus}', ${i})" title="Ver ${fase.label} no calendário colorido"><b>${fase.label}</b><small>${d.nome}</small><small class="ir">Ver calendário →</small></button><div>`;
+    html += `<div class="bloco"><button class="bloco-rotulo" style="background:${cor};color:${corTextoFase(i)}" onclick="irParaFase('${campus}', ${i})" title="Ver ${fase.label} no calendário colorido"><b>${fase.label}</b><small>${d.nome}</small><small class="ir">Ver calendário →</small></button><div>`;
     fase.cells.forEach(c => {
       html += `<div class="linha">
         <span class="dsem">${c.d}</span>
@@ -521,7 +535,7 @@ function renderPorFase(campus) {
         const clique = `onclick="irParaDia('${campus}', ${mi}, '${key}')" title="Ver ${d0}/${mi+1} em Por dia"`;
         if (HOLIDAY_SET.has(key)) { g += `<button class="off" ${clique}>${d0}</button>`; return; }
         const cor = dataCor[key];
-        g += cor ? `<button style="background:${cor};color:#fff" ${clique}>${d0}</button>` : `<button ${clique}>${d0}</button>`;
+        g += cor ? `<button style="background:${cor};color:#0b0d0f" ${clique}>${d0}</button>` : `<button ${clique}>${d0}</button>`;
       });
     });
     g += '</div>';
@@ -571,7 +585,7 @@ function renderPorDia(campus) {
     painel += '<div class="painel-dia vazio">Nenhuma aula neste dia.</div>';
   } else {
     listaSel.forEach(e => {
-      painel += `<button class="aula-item" onclick="irParaFase('${campus}', ${e.faseIdx})" title="Ver ${e.faseLabel} no calendário colorido"><span class="fase" style="background:${corPorFase(e.faseIdx)}">${e.faseLabel}</span><span><span class="nome">${e.cod} - ${e.sigla}</span><br><span class="quem">${e.nome} · 👤 ${e.professor}</span></span></button>`;
+      painel += `<button class="aula-item" onclick="irParaFase('${campus}', ${e.faseIdx})" title="Ver ${e.faseLabel} no calendário colorido"><span class="fase" style="background:${corPorFase(e.faseIdx)};color:${corTextoFase(e.faseIdx)}">${e.faseLabel}</span><span><span class="nome">${e.cod} - ${e.sigla}</span><br><span class="quem">${e.nome} · 👤 ${e.professor}</span></span></button>`;
     });
   }
   painel += '</aside>';
@@ -604,7 +618,7 @@ function render() {
   if (ST.view === 'porFase') {
     subWrap.style.display = '';
     document.getElementById('subNav').innerHTML = DADOS[ST.campus].fases.map((f,i) =>
-      `<button class="tab-item ${i===ST.faseIdx?'fase-ativo':''}" style="${i===ST.faseIdx?'background:'+corPorFase(i)+';color:#fff':''}" onclick="setFase(${i})">${f.label}</button>`
+      `<button class="tab-item ${i===ST.faseIdx?'fase-ativo':''}" style="${i===ST.faseIdx?('background:'+corPorFase(i)+';color:'+corTextoFase(i)):''}" onclick="setFase(${i})">${f.label}</button>`
     ).join('');
   } else {
     subWrap.style.display = 'none';
