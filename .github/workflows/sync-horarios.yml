@@ -15,8 +15,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Buscar horarios.json do ialxnder
-        run: curl -fsSL "https://ialxnder.fly.dev/v1/horarios" -o data/horarios.json
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Verificar contrato de horários do site
+        run: node --test scripts/validate-horarios.test.mjs
+
+      - name: Buscar e validar horários do iALXnder
+        run: |
+          curl -fsSL "https://ialxnder.fly.dev/v1/horarios" -o /tmp/horarios.json
+          node scripts/validate-horarios.mjs /tmp/horarios.json
+          mv /tmp/horarios.json data/horarios.json
 
       - name: Detectar mudanças
         id: diff

@@ -1,0 +1,36 @@
+name: Verificar site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "data/horarios.json"
+      - "scripts/validate-horarios.mjs"
+      - "scripts/validate-horarios.test.mjs"
+      - ".github/workflows/check-site.yml"
+      - ".github/workflows/sync-horarios.yml"
+  pull_request:
+    paths:
+      - "index.html"
+      - "data/horarios.json"
+      - "scripts/validate-horarios.mjs"
+      - "scripts/validate-horarios.test.mjs"
+      - ".github/workflows/check-site.yml"
+      - ".github/workflows/sync-horarios.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Testar página e dados
+        run: |
+          node --test scripts/validate-horarios.test.mjs
+          node scripts/validate-horarios.mjs

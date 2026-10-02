@@ -156,15 +156,16 @@
         #view-schedule .caixa { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
         #view-schedule h2 { margin: 0; font-size: 1.15rem; font-weight: 700; color: #fff; }
         #view-schedule .duas-colunas { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 24px; align-items: start; }
-        #view-schedule .bloco { display: grid; grid-template-columns: 90px minmax(0,1fr); border-top: 2px solid var(--border); }
+        #view-schedule .bloco { display: grid; grid-template-columns: 132px minmax(0,1fr); border-top: 2px solid var(--border); }
         #view-schedule .bloco:first-child { border-top: none; }
-        #view-schedule .bloco-rotulo { padding: 14px; display: flex; flex-direction: column; gap: 4px; color: #fff; border: none; width: 100%; text-align: left; cursor: pointer; font: inherit; }
+        #view-schedule .bloco-cabecalho { display: flex; flex-direction: column; align-items: stretch; }
+        #view-schedule .bloco-rotulo { padding: 14px 14px 4px; display: flex; flex-direction: column; gap: 4px; color: inherit; background: transparent; border: none; width: 100%; text-align: left; cursor: pointer; font: inherit; }
         #view-schedule .bloco-rotulo:hover { filter: brightness(1.08); }
         #view-schedule .bloco-rotulo b { font-size: 15px; }
         #view-schedule .bloco-rotulo small { font-size: 11px; opacity: .85; }
         #view-schedule .bloco-rotulo .ir { font-size: 10px; opacity: .85; margin-top: 2px; }
-        #view-schedule .bloco-rotulo .agenda { font-size: 10px; opacity: .9; margin-top: 2px; text-decoration: underline; }
-        #view-schedule .linha { display: grid; grid-template-columns: 78px 108px minmax(0,1fr) 148px; align-items: center; min-height: 52px; border-top: 1px solid var(--border); background: var(--panel); }
+        #view-schedule .bloco-cabecalho .agenda { font-size: 11px; color: inherit; opacity: .9; margin-top: 2px; padding: 0 14px 14px; text-decoration: underline; }
+        #view-schedule .linha { display: grid; grid-template-columns: 80px 130px minmax(0,1fr) 140px; align-items: center; min-height: 52px; border-top: 1px solid var(--border); background: var(--panel); }
         #view-schedule .linha:first-child { border-top: none; }
         #view-schedule .linha:hover { background: rgba(255,255,255,0.04); }
         #view-schedule .linha > span { padding: 8px 12px; }
@@ -232,11 +233,17 @@
         #view-schedule .aula-item .disc { font-size: 12.5px; color: var(--text-2); }
         #view-schedule .aula-item .quem { font-size: 11.5px; color: var(--muted); }
         #view-schedule .painel-dia .vazio { padding: 16px 20px; color: var(--muted); font-size: 13.5px; }
+        @media (max-width: 1360px) {
+            #view-schedule .duas-colunas { grid-template-columns: minmax(0,1fr); }
+            #view-schedule .lateral { position: static; }
+        }
         @media (max-width: 1100px) {
             #view-schedule .duas-colunas, #view-schedule .cal-layout { grid-template-columns: minmax(0,1fr); }
             #view-schedule .lateral, #view-schedule .painel-dia { position: static; }
             #view-schedule .bloco { grid-template-columns: minmax(0,1fr); }
-            #view-schedule .bloco-rotulo { flex-direction: row; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+            #view-schedule .bloco-cabecalho { flex-direction: row; align-items: center; flex-wrap: wrap; }
+            #view-schedule .bloco-rotulo { flex: 1 1 auto; width: auto; flex-direction: row; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 14px; }
+            #view-schedule .bloco-cabecalho .agenda { padding: 10px 14px; }
             #view-schedule .linha { grid-template-columns: minmax(0,1fr); padding: 6px 12px; }
             #view-schedule .pausa, #view-schedule .extras-wrap { padding-left: 14px; padding-right: 14px; }
             #view-schedule .meses-grandes { grid-template-columns: repeat(2, minmax(0,1fr)); }
@@ -2179,116 +2186,7 @@
 
     <script>
 // --- DATA ---
-        let data = {
-            'AIA': {
-                name: 'Alto Araguaia',
-                phases: [
-                    {
-                        id: 2, label: '2ª Fase', link: 'https://bit.ly/BCC2aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'AOC', n: 'Arq. e Org. de Computadores', p: 'Prof. Juvenal' },
-                            { d: 'Terça', c: 'GA', n: 'Geometria Analítica', p: 'Profa. Adriana' },
-                            { d: 'Quarta', c: 'PIPDD', n: 'Prop. Intelectual, Prot. Dados e Direitos', p: 'Prof. Elton' },
-                            { d: 'Quinta', c: 'CA1', n: 'Cálculo I', p: 'Prof. Antonio' },
-                            { d: 'Sexta', c: 'TMP', n: 'Teoria e Métodos de Pesquisa', p: 'SELETIVO' }
-                        ],
-                        modular: { c: 'ALP2', n: 'Algoritmos e Lab. de Prog. II', p: 'Prof. Lucas', d: '31/08 a 04/09; 21/09 a 25/09; 27/10 a 30/10' }
-                    },
-                    {
-                        id: 4, label: '4ª Fase', link: 'https://bit.ly/BCC4aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'IBD', n: 'Introdução a Banco de Dados', p: 'SELETIVO' },
-                            { d: 'Terça', c: 'ES', n: 'Engenharia de Software', p: 'Profa. Iza' },
-                            { d: 'Quarta', c: 'CN', n: 'Cálculo Numérico', p: 'Prof. Antonio' },
-                            { d: 'Quinta', c: 'ED2', n: 'Estrutura de Dados II', p: 'Prof. Lucas' },
-                            { d: 'Sexta', c: 'F1', n: 'Física I', p: 'Prof. Antonio' }
-                        ],
-                        modular: { c: 'LRC', n: 'Laboratório de Redes', p: 'Prof. Wesley', d: '31/08 a 04/09; 21/09 a 25/09; 27/10 a 30/10' }
-                    },
-                    {
-                        id: 6, label: '6ª Fase', link: 'https://bit.ly/BCC6aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'SM', n: 'Sistemas Multimídia', p: 'Prof. Wesley' },
-                            { d: 'Terça', c: 'SO', n: 'Sistemas Operacionais', p: 'Prof. Juvenal' },
-                            { d: 'Quarta', c: 'SE', n: 'Sistemas Embarcados', p: 'Prof. Fernando' },
-                            { d: 'Quinta', c: 'DSW', n: 'Desenvolvimento de Sistemas WEB', p: 'Prof. Elton' },
-                            { d: 'Sexta', c: 'PAD', n: 'Processamento de Alto Desempenho', p: 'Prof. Lucas' }
-                        ],
-                        modular: null
-                    },
-                    {
-                        id: 8, label: '8ª Fase', link: 'https://bit.ly/BCC8aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'RVA', n: 'Realidade Virtual e Aumentada', p: 'Prof. Elton' },
-                            { d: 'Terça', c: 'IA', n: 'Inteligência Artificial', p: 'Prof. Wesley' },
-                            { d: 'Quarta', c: 'SD', n: 'Sistemas Distribuídos', p: 'Prof. Juvenal' },
-                            { d: 'Quinta', c: 'CF', n: 'Computação Forense', p: 'Profa. Iza' },
-                            { d: 'Sexta', c: 'PI', n: 'Processamento de Imagem', p: 'Profa. Iza' }
-                        ],
-                        extras: [
-                            { c: 'TCC I', n: 'Trabalho de Conclusão I', p: 'Prof. Fernando' },
-                            { c: 'TCC II', n: 'Trabalho de Conclusão II', p: 'Prof. Fernando' },
-                            { c: 'ESS I', n: 'Estágio Supervisionado I', p: 'Prof. Chrystian' },
-                            { c: 'ESS II', n: 'Estágio Supervisionado II', p: 'Prof. Carlos' }
-                        ]
-                    }
-                ]
-            },
-            'ROO': {
-                name: 'Rondonópolis',
-                phases: [
-                    {
-                        id: 1, label: '1ª Fase', link: 'https://bit.ly/BCC1aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'IC', n: 'Introdução à Computação', p: 'Prof. Adriano' },
-                            { d: 'Terça', c: 'FME', n: 'Fundamentos da Matemática Elementar', p: 'Prof. Everton' },
-                            { d: 'Quarta', c: 'PTL', n: 'Produção de Texto e Leitura', p: 'LETRAS' },
-                            { d: 'Quinta', c: 'MD', n: 'Matemática Discreta', p: 'Prof. Jemy' },
-                            { d: 'Sexta', c: 'II', n: 'Inglês Instrumental', p: 'LETRAS' }
-                        ],
-                        modular: { c: 'ALP1', n: 'Algoritmos e Lab. de Prog. I', p: 'Prof. Chrystian', d: '31/08 a 04/09; 21/09 a 25/09; 27/10 a 30/10' }
-                    },
-                    {
-                        id: 3, label: '3ª Fase', link: 'https://bit.ly/BCC3aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'CA2', n: 'Cálculo II', p: 'Prof. Everton' },
-                            { d: 'Terça', c: 'IRC', n: 'Introdução a Redes de Computadores', p: 'Prof. Pierre' },
-                            { d: 'Quarta', c: 'AL', n: 'Álgebra Linear', p: 'Prof. Jemy' },
-                            { d: 'Quinta', c: 'ED1', n: 'Estrutura de Dados I', p: 'Prof. Chrystian' },
-                            { d: 'Sexta', c: 'TG', n: 'Teoria dos Grafos', p: 'Prof. Jemy' }
-                        ],
-                        modular: { c: 'FE', n: 'Fundamentos da Eletrônica', p: 'Prof. Max', d: '31/08 a 04/09; 21/09 a 25/09; 27/10 a 30/10' }
-                    },
-                    {
-                        id: 5, label: '5ª Fase', link: 'https://bit.ly/BCC5aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'GTI', n: 'Governança em TI', p: 'Prof. Pierre' },
-                            { d: 'Terça', c: 'LPOO', n: 'Lab. de Programação Orientada à Objetos', p: 'Prof. Adriano' },
-                            { d: 'Quarta', c: 'PE', n: 'Probabilidade e Estatística', p: 'Prof. Everton' },
-                            { d: 'Quinta', c: 'LFA', n: 'Linguagens Formais e Autômatos', p: 'Prof. Humberto' },
-                            { d: 'Sexta', c: 'SD', n: 'Sistemas Digitais', p: 'Prof. Adriano' }
-                        ],
-                        modular: { c: 'LBD', n: 'Laboratório de Banco de Dados', p: 'Prof. Breno', d: '31/08 a 04/09; 21/09 a 25/09; 27/10 a 30/10' }
-                    },
-                    {
-                        id: 7, label: '7ª Fase', link: 'https://bit.ly/BCC7aFase',
-                        schedule: [
-                            { d: 'Segunda', c: 'DSDM', n: 'Desenv. Sist. para Dispositivos Móveis', p: 'Prof. Breno' },
-                            { d: 'Terça', c: 'CG', n: 'Computação Gráfica', p: 'Prof. Breno' },
-                            { d: 'Quarta', c: 'CO', n: 'Compiladores', p: 'Prof. Humberto' },
-                            { d: 'Quinta', c: 'QTS', n: 'Qualidade e Teste de Software', p: 'Prof. Pierre' },
-                            { d: 'Sexta', c: 'IHC', n: 'Interação Homem Computador', p: 'Prof. Humberto' }
-                        ],
-                        extras: [
-                            { c: 'TCC I', n: 'Trabalho de Conclusão I', p: 'Prof. Fernando' },
-                            { c: 'TCC II', n: 'Trabalho de Conclusão II', p: 'Prof. Fernando' },
-                            { c: 'ESS I', n: 'Estágio Supervisionado I', p: 'Prof. Carlos' },
-                            { c: 'ESS II', n: 'Estágio Supervisionado II', p: 'Prof. Chrystian' }
-                        ]
-                    }
-                ]
-            }
-        };
+        let data = null;
 
         // --- GRADE DE HORÁRIOS: datas letivas + códigos FALECT-CC de 2026/2 ---
         // Nomes/sigla/professor continuam vindo de `data` (acima, sincronizado
@@ -2339,6 +2237,15 @@
         const SCH_MONTH_IDXS = [7,8,9,10,11]; // Ago..Dez (0-indexado)
 
         function schProfTxt(p) { return /SELETIVO|LETRAS|processo seletivo/i.test(p || '') ? "Pendente" : p; }
+        function schEsc(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[char]);
+        }
+        function schSafeLink(value) {
+            try {
+                const url = new URL(value);
+                return url.protocol === 'https:' ? schEsc(url.href) : '';
+            } catch (_) { return ''; }
+        }
         function schIso(ddmm) { const [d,m] = ddmm.split("/").map(Number); return `${SCH_YEAR}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`; }
         const SCH_HOLIDAY_SET = new Set(SCH_HOLIDAYS_DDMM.map(schIso));
         const SCH_MODWEEK_SET = new Set(SCH_MOD13.map(schIso));
@@ -2414,25 +2321,26 @@
             let html = '<div class="duas-colunas"><div class="caixa">';
             d.phases.forEach((fase, i) => {
                 const cor = schCorFase(i);
-                const agenda = fase.link ? `<a class="agenda" href="${fase.link}" target="_blank" onclick="event.stopPropagation()">📅 Agenda Google</a>` : '';
-                html += `<div class="bloco"><button class="bloco-rotulo" style="background:${cor};color:${schTxtFase(i)}" onclick="app.irParaFase('${campus}', ${i})" title="Ver ${fase.label} no calendário colorido"><b>${fase.label}</b><small>${d.name}</small><small class="ir">Ver calendário →</small>${agenda}</button><div>`;
+                const link = schSafeLink(fase.link);
+                const agenda = link ? `<a class="agenda" href="${link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">📅 Agenda Google</a>` : '';
+                html += `<div class="bloco"><div class="bloco-cabecalho" style="background:${cor};color:${schTxtFase(i)}"><button class="bloco-rotulo" onclick="app.irParaFase('${campus}', ${i})" title="Ver ${schEsc(fase.label)} no calendário colorido"><b>${schEsc(fase.label)}</b><small>${schEsc(d.name)}</small><small class="ir">Ver calendário →</small></button>${agenda}</div><div>`;
                 fase.schedule.forEach(s => {
                     const codeInfo = (SCH_CODES[campus][fase.label] && SCH_CODES[campus][fase.label].dias[s.d]) || {};
                     const pend = /pendente/i.test(schProfTxt(s.p));
                     html += `<div class="linha">
-                        <span class="dsem">${s.d}</span>
-                        <span class="cod">${codeInfo.cod || '—'}</span>
-                        <span class="nome"><b>${s.c}</b> — ${s.n}</span>
-                        <span class="prof ${pend?'pend':''}">👤 ${schProfTxt(s.p)}</span>
+                        <span class="dsem">${schEsc(s.d)}</span>
+                        <span class="cod">${schEsc(codeInfo.cod || '—')}</span>
+                        <span class="nome"><b>${schEsc(s.c)}</b> — ${schEsc(s.n)}</span>
+                        <span class="prof ${pend?'pend':''}">👤 ${schEsc(schProfTxt(s.p))}</span>
                     </div>`;
                 });
                 if (fase.modular) {
                     const modCod = (SCH_CODES[campus][fase.label] && SCH_CODES[campus][fase.label].modular && SCH_CODES[campus][fase.label].modular.cod) || '—';
-                    html += `<div class="pausa modular"><b>📦 Modular — ${modCod}:</b> ${fase.modular.c} — ${fase.modular.n} · ${schProfTxt(fase.modular.p)} · <span class="mono">${fase.modular.d}</span></div>`;
+                    html += `<div class="pausa modular"><b>📦 Modular — ${schEsc(modCod)}:</b> ${schEsc(fase.modular.c)} — ${schEsc(fase.modular.n)} · ${schEsc(schProfTxt(fase.modular.p))} · <span class="mono">${schEsc(fase.modular.d)}</span></div>`;
                 }
                 if (fase.extras) {
                     html += '<div class="extras-wrap"><b>🎓 TCC &amp; Estágio (contraturno) — datas a confirmar</b><div class="extras-grid">';
-                    fase.extras.forEach(e => { html += `<div class="extra-item"><span class="cod">${e.c}</span><span>${schProfTxt(e.p)}</span></div>`; });
+                    fase.extras.forEach(e => { html += `<div class="extra-item"><span class="cod">${schEsc(e.c)}</span><span>${schEsc(schProfTxt(e.p))}</span></div>`; });
                     html += '</div></div>';
                 }
                 html += '</div></div>';
@@ -2454,11 +2362,11 @@
             let legenda = '<div class="caixa legenda-cores">';
             fase.schedule.forEach((s, slot) => {
                 const codeInfo = (SCH_CODES[campus][fase.label] && SCH_CODES[campus][fase.label].dias[s.d]) || {};
-                legenda += `<span><i style="background:${schCorSlot(slot)}"></i><b>${s.d}</b> — ${codeInfo.cod || '—'} · ${s.c} — ${s.n}</span>`;
+                legenda += `<span><i style="background:${schCorSlot(slot)}"></i><b>${schEsc(s.d)}</b> — ${schEsc(codeInfo.cod || '—')} · ${schEsc(s.c)} — ${schEsc(s.n)}</span>`;
             });
             if (fase.modular) {
                 const modCod = (SCH_CODES[campus][fase.label] && SCH_CODES[campus][fase.label].modular && SCH_CODES[campus][fase.label].modular.cod) || '—';
-                legenda += `<span><i style="background:${SCH_CORES_DIA[5]}"></i><b>Modular</b> — ${modCod} · ${fase.modular.c} — ${fase.modular.n}</span>`;
+                legenda += `<span><i style="background:${SCH_CORES_DIA[5]}"></i><b>Modular</b> — ${schEsc(modCod)} · ${schEsc(fase.modular.c)} — ${schEsc(fase.modular.n)}</span>`;
             }
             legenda += '</div>';
 
@@ -2521,7 +2429,7 @@
                 painel += '<div class="painel-dia vazio">Nenhuma aula neste dia.</div>';
             } else {
                 listaSel.forEach(e => {
-                    painel += `<button class="aula-item" onclick="app.irParaFase('${campus}', ${e.faseIdx})" title="Ver ${e.faseLabel} no calendário colorido"><span class="fase" style="background:${schCorFase(e.faseIdx)};color:${schTxtFase(e.faseIdx)}">${e.faseLabel}</span><span><span class="nome">${e.cod} - ${e.sigla}</span><br><span class="disc">${e.nome}</span><br><span class="quem">👤 ${e.professor}</span></span></button>`;
+                    painel += `<button class="aula-item" onclick="app.irParaFase('${campus}', ${e.faseIdx})" title="Ver ${schEsc(e.faseLabel)} no calendário colorido"><span class="fase" style="background:${schCorFase(e.faseIdx)};color:${schTxtFase(e.faseIdx)}">${schEsc(e.faseLabel)}</span><span><span class="nome">${schEsc(e.cod)} - ${schEsc(e.sigla)}</span><br><span class="disc">${schEsc(e.nome)}</span><br><span class="quem">👤 ${schEsc(e.professor)}</span></span></button>`;
                 });
             }
             painel += '</aside>';
@@ -2544,11 +2452,14 @@
             async init() {
                 try {
                     const res = await fetch('./data/horarios.json');
-                    if (res.ok) {
-                        data = await res.json();
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const loaded = await res.json();
+                    if (!Array.isArray(loaded?.AIA?.phases) || !Array.isArray(loaded?.ROO?.phases)) {
+                        throw new Error('Formato de horários inválido');
                     }
+                    data = loaded;
                 } catch (e) {
-                    console.warn('Usando dados de horários embutidos de fallback:', e);
+                    console.warn('Horários indisponíveis:', e);
                 }
 
                 // Detecta rota inicial por hash na URL (ex: #tcc, #estagio, #secomp, #schedule, #guide)
@@ -2689,7 +2600,11 @@
 
             renderSchedule() {
                 const campus = this.state.campus;
-                const dataSet = data[campus];
+                const dataSet = data?.[campus];
+                if (!Array.isArray(dataSet?.phases)) {
+                    document.getElementById('sch-conteudo').innerHTML = '<div class="caixa p-6" role="alert"><h2>Horários temporariamente indisponíveis</h2><p>Não foi possível carregar os horários agora. Atualize a página para tentar novamente.</p></div>';
+                    return;
+                }
                 if (this.state.schFaseIdx >= dataSet.phases.length) this.state.schFaseIdx = 0;
 
                 const tabsCampus = document.getElementById('sch-tabsCampus');
@@ -2714,7 +2629,7 @@
                     subNav.innerHTML = dataSet.phases.map((p, i) => {
                         const ativo = this.state.schFaseIdx === i;
                         const estilo = ativo ? `style="background:${schCorFase(i)};color:${schTxtFase(i)}"` : '';
-                        return `<button class="tab-item fase-ativo ${ativo ? 'ativo' : ''}" ${estilo} onclick="app.setFase(${i})">${p.label}</button>`;
+                        return `<button class="tab-item fase-ativo ${ativo ? 'ativo' : ''}" ${estilo} onclick="app.setFase(${i})">${schEsc(p.label)}</button>`;
                     }).join('');
                 } else {
                     subWrap.style.display = 'none';
